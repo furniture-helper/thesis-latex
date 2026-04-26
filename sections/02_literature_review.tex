@@ -1,0 +1,68 @@
+\chapter{Literature Review}
+\label{ch:literature_review}
+
+\section{Structure of the web}\label{sec:web_structure}
+
+\section{Crawling the web}\label{sec:web_crawling}
+
+Web crawling is the process of systematically browsing the web and extracting content from its pages.
+It is a fundamental technique used in various applications, most notably in search engines, where it is used to index the web and make it searchable.
+Another common use of web crawling is in data mining and web scraping, where it is used to collect data from websites for analysis or other purposes.
+More recently, web crawling has also been used in the context of training large language models, where it is used to gather vast amounts of text data from the web to train these models.
+Web crawlers, also known as spiders or bots, are automated programs that perform this task.
+
+
+Crawlers typically traverse the web by following hyperlinks from one page to another, starting from a set of seed URLs\cite{kumar2017survey}.
+They can be designed to crawl the entire web or to focus on specific domains, topics, or types of content.
+
+
+A standard crawler operates in several stages\cite{kausar2013web}:
+\begin{enumerate}
+    \item \textbf{Seed URLs}: The crawler starts with a list of initial URLs, known as seed URLs, which are the starting points for the crawling process.
+
+    \item \textbf{Downloading}: The crawler sends HTTP requests to the URLs and downloads the content of the web pages.
+    The downloaded is stored in local storage or cloud storage for further processing.
+
+    \item \textbf{Extracting links}: The crawler parses the downloaded pages to extract hyperlinks, which are then added to a crawl frontier.
+\end{enumerate}
+
+
+A crawl frontier is a data structure that manages the list of URLs to be crawled, ensuring that the crawler does not revisit the same URL multiple times and that it adheres to any specified crawling policies (e.g., depth limits, domain restrictions).
+The crawl frontier can also be used as a queue to manage iterative and repeated crawling, allowing the crawler to revisit pages at regular intervals to check for updates, maintaining the freshness of the dataset\cite{kumar2017survey}.
+
+
+Traditional web crawlers worked by sending HTTP requests to web servers and downloading the HTML content of web pages.
+However, such crawlers may struggle with modern websites that heavily rely on JavaScript and AJAX to render content dynamically via client-side rendering\cite{295567}.
+Modern web crawlers often need to use headless browsers or tools like Selenium, Puppeteer, or Playwright to handle JavaScript content and ensure that they can access the full content of web pages\cite{mesbah2012crawling}.
+These tools allow the crawler to execute JavaScript and render the page as a regular browser would, while consuming fewer resources than a full browser, enabling the crawler to access dynamic content effectively.
+
+
+It is also important to consider the legal and ethical implications of web crawling.
+\begin{enumerate}
+    \item \textbf{Webmaster intent}: Webmasters may not want their content to be crawled or indexed, and they can use the \texttt{robots.txt} file to specify which parts of their site should not be accessed by crawlers\cite{chang2022survey}.
+
+    \item \textbf{Server load}: Crawling can put a significant load on web servers, especially if the crawler is not designed to be respectful of the site's resources.
+    It is important for crawlers to implement politeness policies, such as rate limiting, to avoid overwhelming servers\cite{kumar2017survey}.
+
+    \item \textbf{Data privacy}: Crawling and scraping can raise privacy concerns, especially if personal data is collected without consent.
+    It is crucial to ensure that any data collected through crawling is handled in compliance with relevant data protection laws and regulations, such as the General Data Protection Regulation (GDPR) in the European Union\cite{khder2021web}.
+\end{enumerate}
+
+A significant challenge in modern web crawling is the use of anti-bot measures by websites, such as CAPTCHAs, IP blocking, and rate limiting, which can hinder the crawling process\cite{Kothari_2026}.
+Advanced security services such as Cloudflare employ fingerprinting techniques to identify and block automated traffic, making it increasingly difficult for crawlers to access content on certain websites\cite{cloudflare_2026}.
+Crawlers need to be designed to navigate these challenges while still adhering to ethical and legal guidelines
+Moreover, content hidden behind paywalls or login screens can also pose challenges for crawlers, as they may require authentication or subscription to access the content.
+Most crawlers, including Google's\cite{google_2026} generally do not access such content, unless explicit permission and credentials are provided by the site owner.
+
+\section{Webpage boilerplate detection and removal}\label{sec:boilerplate_removal}
+
+\section{Webpage classification}\label{sec:webpage_classification}
+
+\section{Webpage content extraction}\label{sec:content_extraction}
+
+\section{Price tracking}\label{sec:price_tracking}
+
+\section{Data pipelines}\label{sec:data_pipelines}
+
+\section{Product matching}\label{sec:product_matching}
+
