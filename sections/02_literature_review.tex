@@ -11,10 +11,8 @@ Another common use of web crawling is in data mining and web scraping, where it 
 More recently, web crawling has also been used in the context of training large language models, where it is used to gather vast amounts of text data from the web to train these models.
 Web crawlers, also known as spiders or bots, are automated programs that perform this task.
 
-
 Crawlers typically traverse the web by following hyperlinks from one page to another, starting from a set of seed URLs\cite{kumar2017survey}.
 They can be designed to crawl the entire web or to focus on specific domains, topics, or types of content.
-
 
 A standard crawler operates in several stages\cite{kausar2013web}:
 \begin{enumerate}
@@ -26,16 +24,13 @@ A standard crawler operates in several stages\cite{kausar2013web}:
     \item \textbf{Extracting links}: The crawler parses the downloaded pages to extract hyperlinks, which are then added to a crawl frontier.
 \end{enumerate}
 
-
 A crawl frontier is a data structure that manages the list of URLs to be crawled, ensuring that the crawler does not revisit the same URL multiple times and that it adheres to any specified crawling policies (e.g., depth limits, domain restrictions).
 The crawl frontier can also be used as a queue to manage iterative and repeated crawling, allowing the crawler to revisit pages at regular intervals to check for updates, maintaining the freshness of the dataset\cite{kumar2017survey}.
-
 
 Traditional web crawlers worked by sending HTTP requests to web servers and downloading the HTML content of web pages.
 However, such crawlers may struggle with modern websites that heavily rely on JavaScript and AJAX to render content dynamically via client-side rendering\cite{295567}.
 Modern web crawlers often need to use headless browsers or tools like Selenium, Puppeteer, or Playwright to handle JavaScript content and ensure that they can access the full content of web pages\cite{mesbah2012crawling}.
 These tools allow the crawler to execute JavaScript and render the page as a regular browser would, while consuming fewer resources than a full browser, enabling the crawler to access dynamic content effectively.
-
 
 It is also important to consider the legal and ethical implications of web crawling.
 \begin{enumerate}
