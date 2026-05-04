@@ -1,16 +1,16 @@
 \section{Boilerplate detection and removal}\label{sec:boilerplate_removal}
 
-A webpage is a document that contains both content and presentation information.
-The content of a webpage is the information that is relevant to the user, while the presentation information is the information that is used to display the webpage.
+A web page is a document that contains both content and presentation information.
+The content of a web page is the information that is relevant to the user, while the presentation information is the information that is used to display the web page.
 Boilerplate refers to the presentation information that is not relevant to the user, such as navigation menus, advertisements, and other non-content elements.
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.8\textwidth]{images/boilerplate_vs_content}~\caption{Boilerplate vs. content on a webpage}
+    \includegraphics[width=0.8\textwidth]{images/boilerplate_vs_content}~\caption{Boilerplate vs. content on a web page}
     \label{fig:boilerplate_vs_content}
 \end{figure}
 
-Boilerplate detection and removal is the process of identifying and removing boilerplate from a webpage so that only the relevant content remains.
+Boilerplate detection and removal is the process of identifying and removing boilerplate from a web page so that only the relevant content remains.
 This is an important task for many applications, such as web scraping, information retrieval, and natural language processing as boilerplate/template content can interfere with the accuracy of these applications.
 
 There are primarily two approaches to boilerplate detection and removal\cite{pomikalek2011removing}:
@@ -44,12 +44,12 @@ This method can be computationally efficient and effective in identifying boiler
 \subsection{Page-level methods}\label{subsec:page-level-methods}
 
 \subsubsection{Body Text Extraction (BTE)}\label{subsubsec:body-text-extraction}
-This is a heuristic-based method based on the observation that the main content of a webpage usually contains long streams of uninterrupted text with a low HTML tag density.
+This is a heuristic-based method based on the observation that the main content of a web page usually contains long streams of uninterrupted text with a low HTML tag density.
 By analyzing the structure of the HTML document and identifying areas with high text density and low tag density, it is possible to extract the main content of the page.
-While this is a simple method, one major drawback is that modern webpages are extremely complex and may not always follow this pattern, leading to inaccurate results. \cite{vogels2018web2text}
+While this is a simple method, one major drawback is that modern web pages are extremely complex and may not always follow this pattern, leading to inaccurate results. \cite{vogels2018web2text}
 
 \subsubsection{Shallow text features}\label{subsubsec:shallow-text-features}
-This method first chunks the webpage into smaller sections based on the structure of the HTML document.
+This method first chunks the web page into smaller sections based on the structure of the HTML document.
 It then computes various features for each chunk, such as link density (the ratio of links to text), text density (the ratio of text to HTML tags), and other structural features.
 High link density is generally indicative of boilerplate, while high text density is more indicative of content. \cite{kohlschutter2010boilerplate}
 
@@ -58,18 +58,18 @@ characterized by short, incomplete sentences  (e.g., home, contact us) is more l
 while descriptive long text, characterized by full sentences and higher complexity is more likely to be content. \cite{kohlschutter2010boilerplate}
 
 \subsubsection{Supervised machine learning techniques}\label{subsubsec:supervised-ml-methods}
-While BTE and shallow text features can be effective in some cases, they may not always be sufficient to accurately identify boilerplate elements, especially on modern webpages with complex structures.
-Supervised machine learning techniques, such as neural networks and multi-layer perceptrons (MLPs), can be trained on labeled datasets of webpages to learn more complex patterns and features that distinguish boilerplate from content.
-By using a large and diverse training dataset, these models can learn to generalize well to new webpages and can be more effective in accurately identifying boilerplate elements.
-These techniques generally show a significant improvement in performance compared to heuristic-based methods, especially on modern webpages with complex structures. \cite{schafer2017accurate}
+While BTE and shallow text features can be effective in some cases, they may not always be sufficient to accurately identify boilerplate elements, especially on modern web pages with complex structures.
+Supervised machine learning techniques, such as neural networks and multi-layer perceptrons (MLPs), can be trained on labeled datasets of web pages to learn more complex patterns and features that distinguish boilerplate from content.
+By using a large and diverse training dataset, these models can learn to generalize well to new web pages and can be more effective in accurately identifying boilerplate elements.
+These techniques generally show a significant improvement in performance compared to heuristic-based methods, especially on modern web pages with complex structures. \cite{schafer2017accurate}
 
 Two examples of supervised machine learning techniques for boilerplate detection and removal are Web2Text\cite{vogels2018web2text},
 which uses Convolutional Neural Networks (CNNs) to predict probabilities for chunks of a page, and the transition between blocks,
 and BoilerNet\cite{leonhardt2020boilerplate}, which use bidirectional LSTMs that learn dependency between blocks and their neighbours.
 
 \subsection{Performance improvements}\label{subsec:performance-improvements}
-Removing boilerplate content from webpages have shown to significant performance gains in downstream tasks such as
-webpage classification and clustering, as it allows these tasks to focus on the relevant content of the page rather than being distracted by irrelevant boilerplate elements.
+Removing boilerplate content from web pages have shown to significant performance gains in downstream tasks such as
+web page classification and clustering, as it allows these tasks to focus on the relevant content of the page rather than being distracted by irrelevant boilerplate elements.
 In addition, it also reduces the amount of data that needs to be processed, which can lead to faster processing times and improved efficiency in these tasks.
 
 Using site style trees (SSTs) to remove boilerplate has been shown to improve the accuracy in web page classification tasks from
