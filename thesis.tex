@@ -3,6 +3,26 @@
 \usepackage{graphicx}
 \usepackage{cite}
 \usepackage{hyperref}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\lstdefinelanguage{json}{
+    basicstyle=\ttfamily\footnotesize,
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    stepnumber=1,
+    numbersep=5pt,
+    showstringspaces=false,
+    breaklines=true,
+    frame=single,
+    stringstyle=\color{teal},
+    morestring=[b]",
+    literate=
+      *{0}{{{\color{purple}0}}}{1}
+       {1}{{{\color{purple}1}}}{1}
+       {:}{{{\color{orange}{:}}}}{1}
+       {,}{{{\color{orange}{,}}}}{1}
+}
 
 
 \setlength{\parindent}{0pt}      % Removes the indent at the start of paragraphs
