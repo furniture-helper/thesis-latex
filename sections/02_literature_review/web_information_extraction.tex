@@ -128,20 +128,21 @@ WebFormer uses four specialized attention patterns (HTML-to-HTML, HTML-to-Text, 
 \subsubsection{Performance comparison}\label{subsubsec:performance_comparison}
 \begin{table}[h]
     \centering
-    \begin{tabular}{llll}
-        \hline
+    \small
+    \renewcommand{\arraystretch}{1.4}
+    \begin{tabularx}{\textwidth}{X l l l}
+        \toprule
         \textbf{Benchmark} & \textbf{Metric} & \textbf{MarkupLM} & \textbf{WebFormer} \\
-        \hline
-        SWDE (1 seed site)  & F1    & 82.11\%           & --                 \\
-        SWDE (5 seed sites) & F1    & 97.37\%           & 92.46\%            \\
-        SWDE                & EM    & --                & 86.58\%            \\
-        SWDE (Products)     & F1    & --                & 83.37\%            \\
-        SWDE (Products)     & EM    & --                & 80.67\%            \\
-        \hline
-        WebSRC              & F1    & 74.47\%           & --                 \\
-        WebSRC              & EM    & 68.39\%           & --                 \\
-        \hline
-    \end{tabular}
+        \midrule
+        SWDE (1 seed site)  & F1 & 82.11\% & --      \\
+        SWDE (5 seed sites) & F1 & 97.37\% & 92.46\% \\
+        SWDE                & EM & --      & 86.58\% \\
+        SWDE (Products)     & F1 & --      & 83.37\% \\
+        SWDE (Products)     & EM & --      & 80.67\% \\
+        WebSRC              & F1 & 74.47\% & --      \\
+        WebSRC              & EM & 68.39\% & --      \\
+        \bottomrule
+    \end{tabularx}
     \caption{Performance comparison of MarkupLM and WebFormer on standard benchmarks}
     \label{tab:markuplm-webformer-performance}
 \end{table}
@@ -167,28 +168,23 @@ Therefore, it is essential that the number of tokens provided as input to the LL
 Web information extraction approaches vary significantly in their reliance on structure, visual layout, and scale.
 Rule-based methods are precise but brittle, while machine learning and transformer-based models offer greater generalisability at the cost of increased complexity.
 Embedded semantic metadata provides a lightweight extraction path but is inconsistently adopted across the web.
-Table~\ref{tab:web_info_extraction_summary} summarises the key approaches reviewed in this section.
 
 \begin{table}[h]
     \centering
     \small
-    \begin{tabular}{p{4cm} p{5.5cm} p{5.5cm}}
-        \hline
+    \renewcommand{\arraystretch}{1.4}
+    \begin{tabularx}{\textwidth}{p{4.5cm} X X}
+        \toprule
         \textbf{Approach} & \textbf{Strengths} & \textbf{Limitations} \\
-        \hline
+        \midrule
         Embedded metadata & Structured, low overhead & Inconsistent adoption \\
-        \hline
         Vision-based & Human-like layout perception & High rendering cost \\
-        \hline
-        DOM node classification & Structural reasoning & Complex training data \\
-        \hline
-        Markup \& layout & Accurate, lightweight & Complex training data \\
-        \hline
+        DOM node classification & Zero-shot, structural reasoning & Complex training data \\
+        Markup \& layout & High accuracy, lightweight & Domain shift degradation \\
         Multimodal & Robust on visually complex pages & Computationally expensive \\
-        \hline
-        LLM & Zero-shot, accurate, generalized & High computational cost \\
-        \hline
-    \end{tabular}
+        LLM-based & Zero-shot, flexible & Token limits, cost, noise sensitivity \\
+        \bottomrule
+    \end{tabularx}
     \caption{Summary of web information extraction approaches}
     \label{tab:web_info_extraction_summary}
 \end{table}
