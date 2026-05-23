@@ -1,5 +1,3 @@
-\section{Crawling the web}\label{sec:web_crawling}
-
 Web crawling is the process of systematically browsing the web and extracting content from its pages.
 It is a fundamental technique used in various applications, most notably in search engines, where it is used to index the web and make it searchable.
 Another common use of web crawling is in data mining and web scraping, where it is used to collect data from websites for analysis or other purposes.
@@ -43,3 +41,27 @@ Advanced security services such as Cloudflare employ fingerprinting techniques t
 Crawlers need to be designed to navigate these challenges while still adhering to ethical and legal guidelines
 Moreover, content hidden behind paywalls or login screens can also pose challenges for crawlers, as they may require authentication or subscription to access the content.
 Most crawlers, including Google's\cite{google_2026} generally do not access such content, unless explicit permission and credentials are provided by the site owner.
+
+\subsection{Summary}\label{subsec:web_crawling_summary}
+
+Web crawling involves a range of technical and ethical considerations.
+Static crawlers are simple and efficient but fail on JavaScript-heavy pages, while headless browser-based crawlers handle dynamic content and client-side rendering at highest resource costs.
+Anti-bot measures and legal/ethical constraints add further complexity that must be carefully managed in any crawling system.
+Table~\ref{tab:web_crawling_summary} summarises the key crawler types and their trade-offs.
+
+\begin{table}[h]
+    \centering
+    \small
+    \renewcommand{\arraystretch}{1.4}
+    \begin{tabularx}{\textwidth}{p{4cm} X X}
+        \toprule
+        \textbf{Crawler Type} & \textbf{Strengths} & \textbf{Limitations} \\
+        \midrule
+        Static HTTP crawler & Lightweight, fast, low resource usage & Cannot handle JavaScript / client-side rendering \\
+        Headless browser & Handles dynamic content; renders JS fully & High resource usage; slower at scale \\
+        \bottomrule
+    \end{tabularx}
+    \caption{Summary of web crawler types and their trade-offs}
+    \label{tab:web_crawling_summary}
+\end{table}
+
