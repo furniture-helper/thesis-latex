@@ -1,0 +1,76 @@
+\section{Product matching}\label{sec:product_matching}
+
+Product matching is the task of identifying and linking different web pages which represent the same underlying product across different e-commerce websites.
+These kinds of tasks are also commonly known as entity resolution, record linkage, or deduplication.
+Brute-forcing product matching is a computationally expensive task, with a quadratic time complexity ($O(n^2)$) in the number of products\cite{shao2018active}.
+
+To mitigate this issue, most pipelines employ a filtering-verification based approach, where a blocking step is used to reduce the number of candidate pairs, followed by a verification step to determine if the candidate pairs are indeed matches.
+The filtering step usually employs a computationally inexpensive method, with low recall, to quickly eliminate a large number of non-matching pairs, while the verification step uses a more sophisticated method, with higher recall, to accurately identify the matching pairs from the candidate set.
+
+Moreover, as the data we have is unstructured, noisy, and often incomplete, product matching is a challenging task that requires sophisticated techniques to achieve high accuracy.
+
+\subsection{Blocking and filtering techniques}\label{subsec:blocking_and_filtering}
+ Blocking involves grouping documents into blocks based on certain criteria, such as shared attributes or similar values, to reduce the number of candidate pairs that need to be compared in the verification step.
+
+\subsubsection{Blocking Key Values (BKV)}\label{subsubsec:bkv}
+Blocking Key Values is a traditional blocking technique that uses specific attributes (keys) of an entity to create blocks.
+For example, in product matching, the blocking key could be the product brand, category, or a combination of attributes.
+While this technique is straightforward and simple to implement, it can lead to a high number of false negatives if the blocking key is not chosen carefully, or if the data is noisy or contains typos.
+Another drawback of BKV is that, it requires the key attribute to be present and correctly formatted in the data, which is not always the case in real-world scenarios.\cite{moslemi2024evaluating}
+
+\subsubsection{Sorted Neighbour Algorithm (SNA)}\label{subsubsec:sna}
+The Sorted Neighbour Algorithm is a more sophisticated blocking technique that sorts the records based on a specific attribute and then compares only the records that are within a certain distance of each other in the sorted list.
+To minimize the effect of noisy data, SNA sorts the records based on a key, and moves a sliding window against it, comparing only the records that fall within the window.\cite{moslemi2024evaluating}
+
+\subsubsection{Canopy Clustering}\label{subsubsec:canopy-clustering} uses two distance thresholds, $T_1$ and $T_2$ (where $0 < T_2 < T_1 < 1$): records within $T_1$ of a randomly selected center are added to its canopy, while those within the tighter $T_2$ are removed from the candidate pool entirely.
+This iterative process continues until the pool is exhausted, with records potentially belonging to multiple canopies due to the looser $T_1$ threshold.
+The coarse similarity measure used for grouping (commonly TF-IDF distance) is computationally inexpensive, with the effective number of comparisons reduced to approximately $O(fn^2/c)$, where $f$ is the average canopy membership per record and $c$ is the total number of canopies.
+However, canopy clustering is sensitive to the value selected for $T_1$.\cite{moslemi2024evaluating}
+
+\subsubsection{Locality Sensitive Hashing (LSH)}\label{subsubsec:lsh}
+Locality Sensitive Hashing is a technique that hashes similar items into the same buckets.
+LSH uses a family of hash functions that are designed to maximize the probability of collision for similar items, while minimizing the probability of collision for dissimilar items.
+In most cases, a vector representation (such as TF-IDF, or document embeddings) of the data is used, and the hash functions are designed to preserve the similarity between the vectors.
+A benefit of LSH is that it can be pre-computed and stored in a hash table, which allows for fast retrieval of candidate pairs.\cite{brinkmann2024sc}
+
+\subsubsection{Pairwise string and text similarity measures}\label{subsubsec:string_similarity}
+This technique uses various string similarity measures to identify potential candidates for a given record.
+These can involves \textbf{character-based metrics} such as Levenshtein distance, Jaro-Winkler distance, and Hamming distance, which measure the similarity between two strings based on their character-level differences.
+Alternatively, \textbf{token-based metrics} such as Jaccard similarity, TF-IDF cosine similarity, and SoftTF-IDF, which measure the similarity based on the tokens (words) in the strings.\cite{sun2015comparative}
+
+\subsubsection{Comparison of blocking and filtering techniques}\label{subsubsec:blocking_comparison}
+
+\begin{table}[H]
+    \centering
+    \small
+    \renewcommand{\arraystretch}{1.4}
+    \begin{tabularx}{\textwidth}{p{3.8cm} X X}
+        \toprule
+        \textbf{Technique} & \textbf{Strengths} & \textbf{Limitations} \\
+        \midrule
+        Blocking Key Values & Computationally efficient; can achieve $O(n)$ complexity with high-quality keys & Highly sensitive to noise and typos; a single character error can cause a missed match; requires labelled attributes\\
+        Sorted Neighbour Algorithm & More noise-tolerant than BKV; $O(n \log n)$ for sorting, $O(wn)$ for the sliding window & Depends on sorting key quality; requires labelled attributes \\
+        Canopy Clustering & Reduces comparisons using coarse similarity; overlapping blocks improve recall; does not require labelled attributes & Sensitive to threshold $T_1$; complexity is typically $O(n^2)$ \\
+        Locality Sensitive Hashing & Efficient for high-dimensional vectors; enables fast ANN search; does not require labelled attributes & Approximate by nature; true matches may be missed; complex to tune \\
+        Pairwise String Similarity & Flexible; does not require labelled attributes & $O(n^2)$ if used standalone \\
+        \bottomrule
+    \end{tabularx}
+    \caption{Comparison of blocking and filtering techniques}
+    \label{tab:blocking_comparison}
+\end{table}
+
+\subsection{Verification techniques}\label{subsec:verification_techniques}
+
+\subsubsection{Approximate Nearest Neighbour (ANN)}\label{subsubsec:ann}
+ANN algorithms are designed to efficiently find the nearest neighbors of a given query point in high-dimensional spaces.
+They essentially trade recall for speed, by allowing for approximate matches rather than exact matches.
+
+\subsection{Related work}\label{subsec:related_work}
+
+\subsubsection{SC-Block}\label{subsubsec:sc-block}
+SC-Block (Supervised Contrastive Blocking)\cite{brinkmann2024sc} is a supervised dense blocking method that uses a RoBERTa-based encoder trained with a supervised contrastive loss to embed records into a vector space, where matching records are pulled closer together and non-matching records are pushed apart.
+Each record is first serialized into a structured string of the form \texttt{[Col] attribute [Val] value} for each attribute, then encoded into a dense embedding.
+To build the training data, SC-Block constructs a correspondence graph from known matching pairs, assigning a shared label to all records within the same connected component, and applies source-aware sampling to prevent unlabeled cross-source matches from being incorrectly treated as negatives.
+At inference time, embeddings of the larger dataset are indexed using FAISS\cite{brinkmann2024sc}, and for each query record the $k$ nearest neighbors are retrieved by cosine similarity to form the candidate set.
+SC-Block has been shown to generate candidate sets roughly half the size of comparable blockers, reducing end-to-end pipeline runtime by up to $4\times$ on large-scale benchmarks, while being particularly robust on e-commerce data with large vocabularies and high attribute noise.
+
