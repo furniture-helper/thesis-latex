@@ -76,13 +76,30 @@ Using site style trees (SSTs) to remove boilerplate has been shown to improve th
 0.625 to 0.954\cite{yi2003eliminating}.
 Using the same method, the average F1-score for k-means clustering also improved from 0.506 to 0.751.
 
-% page level and site level methods
-% style trees
-% computing hashes of subtrees
-% performance improvements in classification tasks and clustering
-% supervised machine learning tasks (neural networks, MLPs)
-% functional short text vs descriptive long test
-% link density
-% text density
-% Body Text Extraction (BTE)
+\subsection{Summary}\label{subsec:boilerplate_summary}
+
+Boilerplate detection and removal is a problem with a number of possible approaches ranging from simple rule-based models to deep learning models.
+Site-level methods are effective when multiple pages from the same website are available, while page-level methods operate on individual pages without any prior site knowledge.
+Supervised machine learning techniques offer the highest accuracy but require labeled training data.
+Table~\ref{tab:boilerplate_summary} summarises the key approaches reviewed in this section.
+
+\begin{table}[h]
+    \centering
+    \small
+    \renewcommand{\arraystretch}{1.4}
+    \begin{tabularx}{\textwidth}{p{4cm} p{2.2cm} X X}
+        \toprule
+        \textbf{Method} & \textbf{Type} & \textbf{Strengths} & \textbf{Limitations} \\
+        \midrule
+        Site Style Trees (SST)\cite{yi2003eliminating} & Site-level & Cross-page detection, improves classification \& clustering & Needs multiple pages from same site \\
+        Subtree hashes\cite{gibson2005volume} & Site-level & Efficient, easy to implement & Needs multiple pages, fragile to DOM changes \\
+        Body Text Extraction (BTE)\cite{vogels2018web2text} & Page-level & No training data, lightweight & Poor accuracy on complex pages \\
+        Shallow text features\cite{kohlschutter2010boilerplate} & Page-level & Interpretable, no training data & Hand-crafted heuristics, limited generalisation \\
+        Web2Text\cite{vogels2018web2text} & Page-level & Learns complex patterns & Requires labeled data \\
+        BoilerNet\cite{leonhardt2020boilerplate} & Page-level & Models block dependencies, best accuracy & Requires labeled data, higher complexity \\
+        \bottomrule
+    \end{tabularx}
+    \caption{Summary of boilerplate detection and removal approaches}
+    \label{tab:boilerplate_summary}
+\end{table}
 

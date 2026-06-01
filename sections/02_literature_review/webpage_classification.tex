@@ -81,3 +81,31 @@ E-commerce web page classification is a specific application of web page classif
 This can be particularly challenging as e-commerce sites contain complex and repetitive structures, which can also vary significantly across different sites.
 In addition, the presence of noise such as advertisements, navigation menus, and other non-content elements can also hinder the classifier's performance.
 In\cite{petprasit2015commerce}, it was shown that Multi-Layer Perceptron (MLP) based models and SVMs can achieve a strong performance on e-commerce web page classification tasks.
+
+\subsection{Summary}\label{subsec:webpage_classification_summary}
+
+Web page classification techniques vary in their complexity, data requirements, and resource requirements.
+Keyword-based methods are simple but inaccurate on complex pages, while supervised learning and transformer-based models offer stronger performance while requiring extensive labelled training data and compute resources.
+LLMs provide a zero-shot alternative but are expensive at scale.
+Table~\ref{tab:webpage_classification_summary} summarises the key approaches reviewed in this section.
+
+\begin{table}[h]
+    \centering
+    \small
+    \renewcommand{\arraystretch}{1.4}
+    \begin{tabularx}{\textwidth}{p{4cm} X X}
+        \toprule
+        \textbf{Technique} & \textbf{Strengths} & \textbf{Limitations} \\
+        \midrule
+        Keyword-based (TF-IDF) & Simple, no training data, fast & Low accuracy on complex pages \\
+        Classical ML (SVM, kNN, Naive Bayes) & Well-studied, strong baseline, efficient & Requires labeled data, limited context understanding \\
+        Deep learning (CNN, RNN) & Captures sequential patterns, better generalisation & High data and compute requirements \\
+        Transformer-based (BERT, MarkupLM) & Captures context, leverages HTML structure & Computationally expensive, needs fine-tuning \\
+        LLM-based & Zero-shot, handles long context & High API cost, slow inference at scale \\
+        PEBL (positive examples only) & No negative examples needed & Less accurate than fully supervised methods \\
+        \bottomrule
+    \end{tabularx}
+    \caption{Summary of web page classification techniques}
+    \label{tab:webpage_classification_summary}
+\end{table}
+
