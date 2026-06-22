@@ -10,7 +10,8 @@ The filtering step usually employs a computationally inexpensive method, with lo
 Moreover, as the data we have is unstructured, noisy, and often incomplete, product matching is a challenging task that requires sophisticated techniques to achieve high accuracy.
 
 \subsection{Blocking and filtering techniques}\label{subsec:blocking_and_filtering}
- Blocking involves grouping documents into blocks based on certain criteria, such as shared attributes or similar values, to reduce the number of candidate pairs that need to be compared in the verification step.
+
+Blocking involves grouping documents into blocks based on certain criteria, such as shared attributes or similar values, to reduce the number of candidate pairs that need to be compared in the verification step.
 
 \subsubsection{Blocking Key Values (BKV)}\label{subsubsec:bkv}
 Blocking Key Values is a traditional blocking technique that uses specific attributes (keys) of an entity to create blocks.
@@ -61,16 +62,106 @@ Alternatively, \textbf{token-based metrics} such as Jaccard similarity, TF-IDF c
 
 \subsection{Verification techniques}\label{subsec:verification_techniques}
 
-\subsubsection{Approximate Nearest Neighbour (ANN)}\label{subsubsec:ann}
+Once a candidate set of potential matches has been generated through blocking/filtering, the next step is to verify which of these candidates are indeed matches.
+This step typically involves more computationally expensive techniques, as the number of candidate pairs is significantly reduced compared to the original dataset.
+
+\subsubsection{Approximate Nearest Neighbour (ANN) with vector databases}\label{subsubsec:ann}
+
 ANN algorithms are designed to efficiently find the nearest neighbors of a given query point in high-dimensional spaces.
 They essentially trade recall for speed, by allowing for approximate matches rather than exact matches.
+In the context of product matching, ANN can be used to compare vector representations of candidate product records (such as embeddings, or TF-IDF representation) to determine if they are likely to be matches.
+There are multiple ANN algorithms available.
 
-\subsection{Related work}\label{subsec:related_work}
+\textbf{Hierarchical Navigable Small World (HNSW)} is a state-of-the-art ANN algorithm that constructs a multi-layer graph where each layer represents a different level of granularity in the search space.
+The algorithm navigates through the graph to find the nearest neighbors efficiently, with a time complexity of $O(\log n)$ for search and $O(n \log n)$ for construction.\cite{malkov2018efficient}
 
-\subsubsection{SC-Block}\label{subsubsec:sc-block}
-SC-Block (Supervised Contrastive Blocking)\cite{brinkmann2024sc} is a supervised dense blocking method that uses a RoBERTa-based encoder trained with a supervised contrastive loss to embed records into a vector space, where matching records are pulled closer together and non-matching records are pushed apart.
-Each record is first serialized into a structured string of the form \texttt{[Col] attribute [Val] value} for each attribute, then encoded into a dense embedding.
-To build the training data, SC-Block constructs a correspondence graph from known matching pairs, assigning a shared label to all records within the same connected component, and applies source-aware sampling to prevent unlabeled cross-source matches from being incorrectly treated as negatives.
-At inference time, embeddings of the larger dataset are indexed using FAISS\cite{brinkmann2024sc}, and for each query record the $k$ nearest neighbors are retrieved by cosine similarity to form the candidate set.
-SC-Block has been shown to generate candidate sets roughly half the size of comparable blockers, reducing end-to-end pipeline runtime by up to $4\times$ on large-scale benchmarks, while being particularly robust on e-commerce data with large vocabularies and high attribute noise.
+\textbf{Inverted File with Flat Compression (IVF-Flat)} is an ANN algorithm that partitions the vector space into a specified number of cluster using the K-means algorithm.
+At query time, the system identified and searches only the nearest clusters instead of the entire index.
+This approach significantly reduces the search space, with a time complexity of $O(n \log n)$ for index construction and $O(k \log n)$ for search, where $k$ is the number of clusters searched.\cite{InstaclustrPgvector2025}
 
+These algorithms can be implemented on PostgreSQL databases using extensions like pgvector\cite{InstaclustrPgvector2025} and pgvectorscale, which provides efficient indexing and querying capabilities for high-dimensional vectors.\cite{FirecrawlBestVectorDBs2026}
+However, using dedicated vector databases such as Pinecode, Milvus, or Qdrant can offer faster search performance and better scalability, as they are optimized for ANN search and can handle larger datasets more efficiently.
+They also support a wider range of ANN algorithms and provide additional features such as distributed indexing, querying, and hybrid search.\cite{EncorePgvectorVsQdrant2026}
+However for smaller datasets, using a PostgreSQL database with pgvector can be a cost-effective and competive solution\cite{ImranZaman2026VectorBenchmark}
+
+\subsubsection{Probabilistic record linkage}\label{subsubsec:probabilistic_record_linkage}
+
+Probabilistic record linkage is a technique that uses statistical models to estimate the probability that two records refer to the same entity.
+This approach typically involves calculating a similarity score for each pair of records based on their attributes, and then using a threshold to determine if the pair is a match or not.
+It computes the likelihood of a match based on the agreement and disagreement of attributes, and can incorporate prior knowledge about the data to improve accuracy using Bayesian mechanics.\cite{ProspeoProbabilisticMatching}
+
+In essence, it computes three probabilities for whether two records from the dataset are a match:
+\begin{itemize}
+    \item $m$: the probability that a given attribute agrees between two records, given that they are a match.
+    \item $u$: the probability that a given attribute agrees between two records, given that they are not a match.
+    \item $\lambda$: the prior probability that any two records are a match.
+\end{itemize}
+
+For each attribute, the \textbf{Bayes Factor} $K$ quantifies the strength of evidence for a match as the ratio of these probabilities:
+\begin{equation}
+    K = \frac{m}{u}\label{eq:equation}
+\end{equation}
+A Bayes Factor of 10 means an agreement on that attribute is ten times more likely if the records are a match than if they are not.
+To make weights additive across attributes, the Bayes Factor is log-transformed into a \textbf{match weight}:
+\begin{equation}
+    w = \log_2\!\left(\frac{m}{u}\right)\label{eq:equation2}
+\end{equation}
+A positive weight provides evidence for a match, while a negative weight provides evidence against it.
+The total match weight $W = \sum_i w_i$ across all attributes is then converted into a final \textbf{match probability} via:
+\begin{equation}
+    P(\text{match}) = \frac{\lambda \cdot 2^W}{1 - \lambda + \lambda \cdot 2^W}\label{eq:equation3}
+\end{equation}
+For example, with a uniform prior $\lambda = 0.5$, a total weight of $W = 3$ corresponds to a match probability of approximately 90\%, while $W = 7$ yields approximately 99\%.\cite{winkler1991application}
+
+A drawback of using probabilistic record linkage is that it requires attribute-value pairs to be present and correctly formatted in the data, which is not always the case in real-world scenarios.
+Additionally, it can be computationally expensive to calculate the similarity scores and probabilities for large datasets, especially if the number of attributes is large.
+
+\subsubsection{Deep learning and pre-trained language models}\label{subsubsec:deep_learning}
+
+Deep learning techniques, particularly those leveraging pre-trained language models (PLMs) such as BERT, have shown significant promise in entity resolution tasks, including product matching.
+These models can capture complex semantic relationships between product attributes and descriptions, making them particularly effective in handling noisy and unstructured data.
+By fine-tuning PLMs on labeled datasets of product pairs, the models can learn to generate embeddings that reflect the similarity between products, which can then be used for both blocking and verification steps.
+
+\textbf{DeepMatcher}\cite{xie2024deepmatcher} is a framework which introduced a deep learning-based approach to entity resolution, using customized Recurrent Neural Networks (RNNs) and attention mechanisms to learn representations of product pairs and predict matches.
+It aggregates attribute values into vector representations before performing pairwise comparisons.
+While DeepMatcher demonstrated good performance on unstructured data, it can struggle with long sequences of text.
+
+\textbf{The DITTO framework}\cite{li2020deep} treats entity resolution and a sequence-to-sequence binary classification task.
+It serializes the attribute-value pairs of two records into a single string, which is then passed through a transformer model such as BERT or RoBERTa to preict whether the two records match.
+This technique has shown stronger performance than DeepMatcher, however it requires attribute-value pairs to be present in the data.
+
+\textbf{RexBERT}\cite{bajaj2026rexbert} is a context-specific model based on BERT which has been fine-tuned on an e-commerce product dataset.
+While general purpose pre-trained language models can capture semantic relationships, they may not be optimized for the specific language and structure of product data.
+RexBERT is designed to better capture the nuances of product descriptions and attributes, which can lead to improved performance in product matching tasks.
+
+\subsubsection{Multi-modal approaches}\label{subsubsec:multi_modal}
+
+Multi-modal approaches involve using both textual and visual information to perform product matching.
+For example, a product may have a textual description as well as an image, and both of these can be used to determine if two products are a match.
+By combining features from both modalities, multi-modal approaches can often achieve higher accuracy than methods that rely solely on text or images.
+For instance, a product may have a similar description to another product, but the images may reveal that they are different products (e.g., different colors or designs).
+Conversely, two products may have different descriptions but similar images, which could indicate that they are the same product with different attribute values (e.g., different sizes or materials).
+While this technique is significantly more complex and resource intensive than text-only approaches, its effectiveness in e-commerce datasets may not be as expected, as different product variations can have very similar images, and product descriptions can often contain more discriminative information than images alone.\cite{wilke2021towards}
+
+\subsubsection{Comparison of verification techniques}\label{subsubsec:verification_comparison}
+
+\begin{table}[H]
+    \centering
+    \small
+    \renewcommand{\arraystretch}{1.4}
+    \begin{tabularx}{\textwidth}{p{3.0cm} X X p{1.8cm}}
+        \toprule
+        \textbf{Technique} & \textbf{Strengths} & \textbf{Limitations} & \textbf{Requires Attr.\ Data?} \\
+        \midrule
+        HNSW & Graph-based; $O(\log n)$ search; high recall, low latency & Memory-intensive; slow index build & No \\
+        IVFFlat & Faster builds and lower memory than HNSW; suits frequent re-indexing & Lower recall; depends on cluster count & No \\
+        Probabilistic Record Linkage & Weighs multiple fields; interpretable; robust on messy data & Requires tuning of $m$, $u$, and thresholds & Yes \\
+        DeepMatcher & Semantic similarity via RNNs and attention; strong on dirty data & Slow training; OOM errors on large datasets & No \\
+        DITTO & Strong performance; label-efficient & 512-token limit; high GPU cost & Yes \\
+        RexBERT & E-commerce optimised; 8,192-token context; efficient vs.\ larger models & Domain-specific; needs large retail corpus & No \\
+        Multi-modal & Fuses text and image; effective in visual domains & High compute cost; weak image signal in some domains & No \\
+        \bottomrule
+    \end{tabularx}
+    \caption{Comparison of verification techniques for product matching}
+    \label{tab:verification_comparison}
+\end{table}
