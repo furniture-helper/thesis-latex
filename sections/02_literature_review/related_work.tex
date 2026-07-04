@@ -1,0 +1,112 @@
+\section{Related work}\label{sec:related_work}
+
+\subsection{Consumer-facing public systems}\label{sec:related_work_public_systems}
+Several publicly accessible systems exist which aggregate product information from multiple online retailer, and make it available to consumers.
+They offer different features and the underlying techniques used to extract and process the data vary widely.
+
+Some of the most popular systems include:
+\begin{itemize}
+
+    \item \textbf{CamelCamelCamel}\footnote{\url{https://camelcamelcamel.com/}} tracks over 18 million products on Amazon,
+    generating over 72 million price records per day.
+    While it primarily uses the Amazon Product Advertising API to collect product information, it also employs distributed headless
+    web scraping to extract information when API rate-limits are reached, and also to extract unexposed metrics such as
+    Buy Box variations.
+    A major drawback of CamelCamelCamel is that it is limited to the Amazon ecosystem.\cite{systemdesignhandbook_camelcamelcamel}
+
+    \item \textbf{Keepa}\footnote{\url{https://keepa.com/}} monitors over 5.6 billion products over 11 global marketplaces.
+    It provides detailed charts including sales rank, Buy Box statistics, and inventory levels, updated as frequently as every 15 minutes.
+    It provides deeper metrics such as sales rank history, inventory leve, and Buy Box statistics.
+    While its free-tier offers basic features, the more advanced features require a premium subscription.\cite{harpa_price_trackers}
+
+    \item \textbf{PayPal Honey}\footnote{\url{https://www.joinhoney.com/}} operates across thousands of retailers.
+    Its droplist feature allows users to track price changes for specific products, and it also provides a browser extension that automatically applies coupon codes at checkout.
+    Honey collects product information through a combination of web scraping and partnerships with retailers, and it also uses crowdsourced data from its user base to enhance its product database.\cite{paypal_honey_guide}
+
+    \item \textbf{37left.lk}\footnote{\url{https://37left.lk/}} is a Sri Lankan price comparison website that allows users to compare prices of products across multiple online retailers and check historical price records.
+    It collects product information by continuously crawling the websites of participating retailers.
+    It also supports features such as price alerts, allowing users to receive notifications when the price of a tracked product drops below a specified threshold.
+    Currently, 12 Sri Lankan retailers are supported.\cite{37left_faq}
+
+\end{itemize}
+
+\subsection{Self-hosted and open-source systems}\label{sec:related_work_self_hosted}
+Several self-hosted and open-source systems exist that allow users to track product prices and availability across multiple online retailers.
+These systems often provide more flexibility and control over the data collection and processing methods,
+but may require more technical expertise to set up and maintain.
+A key benefit that self-hosted systems offer is that they allow users to keep control of their data and privacy.
+
+\begin{itemize}
+    \item \textbf{PriceGhost} allows price tracking from virtually any e-commerce website.
+    Its primary highlight, is its Price Voting Modal, which runs four independent extraction methods in parallel to extract product information from a given product page.\cite{priceghost_github}
+    \begin{itemize}
+        \item JSON-LD: Reads structured data embedded in the product page's HTML, which is often used by e-commerce websites to provide product information in a machine-readable format.
+        \item Site-specific scrapers: Using custom rule-based scrapers for major retailers such as Amazon, Walmart, and Best Buy.
+        \item Generic CSS: Using intelligent CSS selectors to extract product information from the page's HTML.
+        \item AI Analysis: Using LLMs to analyze the product page and extract relevant information based on the page's content and structure.
+    \end{itemize}
+    The results from these four methods, showing each candidate with the method used and the confidence score, are presented to the user for verification and selection.
+
+    \item \textbf{PriceBuddy}, while it also supports price tracking for major retailers out of the box, it also allows users to create custom scrapers for any e-commerce website
+    by providing CSS selectors, regular expressions, or JSON paths.
+    It also offers a multi-store comparison feature, which allows users to add multiple URLs for a single product entry and compare prices across different retailers.
+    A distinct feature of PriceBuddy is its unit pricing feature, which allows users to compare prices based on the quantity or size of the product, making it easier to identify the best value per unit.
+    It also provides support for in-stock tracking, including opt-in back-in-stock alerts.\cite{pricebuddy_github}
+\end{itemize}
+
+\subsection{Enterprise competitive intelligence systems}\label{sec:related_work_enterprise_systems}
+Several enterprise-level competitive intelligence systems exist that provide businesses with insights into their competitors' pricing strategies,
+product offerings, and market trends.
+These systems often offer advanced features such as automated data collection, analytics dashboards, and integration with other business intelligence tools.
+They are typically used by larger organizations with dedicated teams for market research and competitive analysis
+
+\begin{itemize}
+
+    \item \textbf{Omnia Retail}\footnote{\url{https://www.omniaretail.com}} provide intelligence platforms combining dynamic repricing with agentic AI.
+    Omnia Agent analyzes pricing data and surfaces relevant insights without requiring manually curated dashboards, offering recommendations.
+    These systems help organizations spot pricing shifts in real-time and execute pricing strategies across multiple markets.\cite{scrapewise_price_monitoring_2026}
+
+    \item \textbf{Price2Spy}\footnote{\url{https://www.price2spy.com}} specializes in Minimum Advertised Price (MAP) monitoring and enforcement.
+    It helps brands maintain pricing integrity across global reseller networks through automated evidence collection and real-time monitoring of reseller compliance.\cite{scrapewise_price_monitoring_2026}
+
+    \item \textbf{Competera}\footnote{\url{https://www.competera.net}} is an AI-native platform combining elasticity-based pricing with predictive algorithms.
+    It suggests optimal pricing adjustments based on customer behavior and market conditions, reducing operational costs by up to 30\% while improving pricing accuracy and customer lifetime value.\cite{competera_product_matching}
+    The platform excels in product matching and relationship management through several capabilities:
+    \begin{itemize}
+        \item \textit{Product Relationship Management}: Establishes linear or hierarchical dependencies between products, allowing synchronized pricing adjustments across related items.
+        \item \textit{Dynamic Product Assignment}: Automatically distributes products to pricing campaigns based on specific sales parameters and business constraints.
+    \end{itemize}
+
+\end{itemize}
+
+\subsection{Summary of Related Systems}\label{sec:related_work_summary}
+
+\begin{table}[H]
+\centering
+\footnotesize
+\begin{tabularx}{\textwidth}{|p{2.3cm}|p{2.7cm}|X|X|}
+\hline
+\textbf{System} & \textbf{Type} & \textbf{Key Features} & \textbf{Primary Techniques Used} \\
+\hline
+Camel\-Camel\-Camel & Public (Free) & Amazon-exclusive price tracking, historical price charts, and email price-drop alerts & Web scraping and official Amazon Product Advertising API \\
+\hline
+Keepa & Public (Freemium) & Detailed Amazon price/stock history, sales rank tracking, Buy Box statistics, and inventory monitoring & Continuous large-scale scraping of billions of products and API access for premium data \\
+\hline
+PayPal Honey & Public (Free) & Automated coupon finder (primary), multi-retailer ``Droplist'' for tracking, and Amazon seller price comparisons & Browser extension tracking, affiliate-driven data model, and alleged ``Secret Tab'' redirection for attribution \\
+\hline
+37left.lk & Public (Free) & Multi-store price comparison specifically for Sri Lanka, 24/7 scanning, and WhatsApp/email alerts & Automated retailer scanning, lightning-fast internal search engine, and synonym matching \\
+\hline
+PriceGhost & Open-Source (Self-Hosted) & Universal price/stock tracking, interactive history charts, multi-user support, and back-in-stock alerts & ``Price Voting'' system using four parallel methods: JSON-LD, site-specific scrapers, generic CSS, and AI fallback \\
+\hline
+PriceBuddy & Open-Source (Self-Hosted) & Support for custom store addition (CSS/Regex), side-by-side multi-store comparison, and unit price calculation & Scrapers based on custom selectors/JSONPath, headless browser rendering (SeleniumBase), and AI self-healing \\
+\hline
+Omnia Retail & Enterprise & Multi-channel competitor monitoring, dynamic repricing, MAP enforcement, and Buy Box analytics & Real-time monitoring, direct API connections to comparison engines, and agentic AI for shift detection \\
+\hline
+Price2Spy & Enterprise & Specialized MAP monitoring with evidence collection, global marketplace tracking, and detailed history & 4-tier matching (Manual, Automatch, Quick, ML Hybrid), hourly refresh rates, and manual QA validation \\
+\hline
+Competera & Enterprise & AI predictive pricing, high-accuracy exact and similar product matching, and demand elasticity modeling & Deep Learning for entity resolution, real-time client-specific crawling infrastructure, and AI pricing assistants \\
+\hline
+\end{tabularx}
+\caption{Comparison of price-tracking and product-matching systems.}
+\label{tab:detailed_systems_comparison}
+\end{table}
