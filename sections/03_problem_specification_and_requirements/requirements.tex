@@ -1,0 +1,23 @@
+\section{Requirements}\label{sec:requirements}
+
+\subsection{Functional requirements}\label{subsec:functional-requirements}
+
+\begin{itemize}
+    \item Provided a set of seed URLs, the system must crawl each URL, render the page, and store its HTML content in a BLOB storage.
+    \item For each page crawled, the system must identify hyperlinks to other pages and add them to the crawling queue.
+    \item The system must be able to classify each crawled webpage as a product page or a non-product page.
+    \item For each product page, the system must extract the product's title, current price, product image, and whether the product is in stock or out of stock.
+    \item The system must be able to display the price-history of a product over time.
+    \item Given a specific product from a specific e-commerce website, the system must be able to find the same product offered on other e-commerce websites.
+\end{itemize}
+
+\subsection{Non-functional requirements}\label{subsec:non-functional-requirements}
+
+\begin{itemize}
+    \item The system must be able to track at least 100,000 products from at least 30 different e-commerce websites.
+    \item The price of each product must be updated at least once every 72 hours.
+    \item The distributed crawler must ensure that the crawling process does not impact the performance of the target e-commerce websites, and must respect the robots.txt file of each website.
+    \item The system must be able to retrieve the price history for a product in under 500 milliseconds.
+    \item The system must be able to find the same product offered on other e-commerce websites in under 2 seconds.
+    \item The system must be implemented at a low cost of under USD 300 per month, including cloud hosting and storage costs.
+\end{itemize}
