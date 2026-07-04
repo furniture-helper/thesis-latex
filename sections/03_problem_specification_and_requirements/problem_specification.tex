@@ -1,14 +1,4 @@
-Currently, hunting for deals and comparing prices across multiple online stores can be a time-consuming and tedious task for consumers.
-With the increasing number of retailers and e-commerce marketplaces offering their products to be purchased online, consumers often find themselves overwhelmed with the sheer volume of options available to them.
-Moreover, it is difficult for consumers to identify whether sales and discounts offered on these platforms are genuine or if they are simply marketing tactics to attract customers, where the original prices are marked up to create the illusion of a discount.
-With the same product offered at different platforms, consumers are often left wondering which platform offers the best deal, and whether they are getting the best value for their money.
-
-While LLMs and agentic systems have to a certain extent, have proven useful in solving these problems, they do have their limitations.
-
-\begin{itemize}
-    \item \textbf{Limited selection}: When prompted, LLMs do not provide results from all available platforms, but rather to a selection of 3-5 platforms, which may not be representative of the entire market.
-    This can lead to consumers missing out on better deals available on other platforms.
-    \item \textbf{Inability to track historical prices}: While they are able to access real-time data, LLMs are unable to track historical prices of products, which can be useful in determining whether a sale or discount is genuine or not.
-    \item \textbf{High cost and resource usage}: LLMs are resource-intensive and can be costly to run, especially when dealing with large volumes of data.
-    While for small-scale product comparison, LLMs may be feasible, for larger-scale comparisons, they may not be practical.
-\end{itemize}
+\section{Problem Specification}\label{sec:problem-specification}
+The problem specification for this project is to design and implement a framework that can efficiently crawl multiple e-commerce platforms, identify product pages, extract relevant product information, track historical prices, and compare products across different platforms.
+The framework should be scalable, efficient, and generalizable, allowing it to be used across different online platforms without the need for platform-specific rules or logic.
+The framework should also be able to identify the same product across different platforms, even if they are listed under different names or descriptions.
