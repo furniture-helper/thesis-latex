@@ -1,0 +1,29 @@
+\chapter{System design}
+\label{chap:system_design}
+
+The proposed system consists of eight different modules, each of which is responsible for a specific task.
+The modules are interconnected and work together to achieve the overall functionality of the system. The modules are as follows:
+\begin{enumerate}
+    \item The \textbf{Distributed web crawler} module is responsible for crawling the selected websites and collecting the HTML content of each page.
+    It uses a distributed architecture to efficiently handle large numbers of pages and minimize duplicate crawls.
+    Each page is repeatedly crawled on a frequent basis to ensure that the data is up-to-date.
+
+    \item The \textbf{Data labeller} is a simple web application that enabled easy annotation of the crawled pages.
+    It allows users to label pages based on their type (product page, product list page, error page, or other) and relevant product information (product name, price, image, and stock status).
+
+    \item The \textbf{HTML minimizer} module is responsible for removing boilerplate content from the crawled HTML pages, retaining only the relevant content for further processing.
+
+    \item The \textbf{Page classifier} module is responsible for classifying the crawled pages into product pages and non-product pages.
+
+    \item The \textbf{Information extractor} module is responsible for extracting relevant product information from the product pages, such as product name, price, image, and stock status.
+
+    \item The \textbf{Product matching} module is responsible for identifying and linking identical products across different websites.
+
+    \item The \textbf{Proof-of-concept (PoC) system} is a web-based application that allows users to search for products, analyze their price history, and compare prices across different websites.
+
+    \item The \textbf{Observability dashboard} is dashboard which allows for the monitoring of the above modules' performance and health, providing insights into the system's operation and enabling proactive maintenance.
+\end{enumerate}
+
+The following sections provide a detailed description of each module and its functionality.
+
+\input{sections/05_system_design/crawler}
