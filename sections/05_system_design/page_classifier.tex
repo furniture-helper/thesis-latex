@@ -1,10 +1,10 @@
 \section{Page classifier}\label{sec:page_classifier}
 
-The page classifier module is responsible for classifying the crawled pages into product pages and non-product pages.
+The page classifier module is responsible for classifying the crawled pages into product pages and non-product pages - which is essentially a binary classification problem.
 This module is crucial for filtering out irrelevant pages and ensuring that only product pages are processed by the information extractor and product matching modules.
 The page classifier is able to accurately identify product pages by analyzing the content and structure of the minimized HTML pages.
 
-This takes place in two phases.
+This takes place in three phases.
 \begin{enumerate}
     \item \textbf{Training phase:} In this phase, the page classifier is trained using the labelled dataset of HTML pages.
     The labelled dataset is created using the data annotation application.
@@ -21,8 +21,8 @@ For this purpose, three different model architectures were trained and evaluated
 
 \begin{itemize}
     \item \textbf{TF-IDF with traditional machine learning classifiers:} This approach involves extracting TF-IDF features from the HTML content and using traditional machine learning classifiers, such as logistic regression, support vector machines (SVM), and random forests, to classify the pages.
-    \item \textbf{BERT embeddings with a neural network classifier:} This approach involves using a pre-trained BERT model to generate embeddings for the HTML content, which are then fed into a neural network classifier for classification.
-    \item \textbf{MarkupLM:} This approach involves using a pre-trained MarkupLM model, which is specifically designed for processing HTML content, to classify the pages.
+    \item \textbf{BERT embeddings with a neural network classifier:} This approach involves using a pre-trained BERT model to generate embeddings for the textual content of the page, which are then fed into a neural network classifier for classification.
+    \item \textbf{MarkupLM for document classification:} This approach involves using a pre-trained MarkupLM model, which is specifically designed for processing HTML documents, to classify the pages.
 \end{itemize}
 
 In each of the above approaches, the model's hyperparameters were tuned using a grid search approach available in AWS SageMaker, which is illustrated in Figure~\ref{fig:page_classifier_training_phase}.

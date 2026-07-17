@@ -8,10 +8,10 @@ The modules are interconnected and work together to achieve the overall function
     It uses a distributed architecture to efficiently handle large numbers of pages and minimize duplicate crawls.
     Each page is repeatedly crawled on a frequent basis to ensure that the data is up-to-date.
 
+    \item The \textbf{HTML minimizer} module is responsible for removing boilerplate content from the crawled HTML pages, retaining only the relevant content for further processing.
+
     \item The \textbf{Data labeller} is a simple web application that enabled easy annotation of the crawled pages.
     It allows users to label pages based on their type (product page, product list page, error page, or other) and relevant product information (product name, price, image, and stock status).
-
-    \item The \textbf{HTML minimizer} module is responsible for removing boilerplate content from the crawled HTML pages, retaining only the relevant content for further processing.
 
     \item The \textbf{Page classifier} module is responsible for classifying the crawled pages into product pages and non-product pages.
 
@@ -31,3 +31,4 @@ The following sections provide a detailed description of each module and its fun
 \input{sections/05_system_design/minimizer}
 \input{sections/05_system_design/labeller}
 \input{sections/05_system_design/page_classifier}
+\input{sections/05_system_design/information_extraction}
