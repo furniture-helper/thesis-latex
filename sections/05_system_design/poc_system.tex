@@ -25,7 +25,7 @@ The API provides the following endpoints:
     \item \texttt{GET /products/source-crawled-page?url={url}} - Retrieves the original crawled HTML content of the product page based on the provided URL.
     \item \texttt{GET /products/source-minimized-page?url={url}} - Retrieves the minimized HTML content of the product page based on the provided URL.
     \item \texttt{GET /products/random} - Retrieves a random product from the database.
-    \item \texttt{GET /products/mark-matching?url1={url1}\&url2={url2}\&isMatching={match}} - Marks two products as matching based on the provided URLs and match status.
+    \item \texttt{POST /products/mark-matching?url1={url1}\&url2={url2}\&isMatching={match}} - Marks two products as matching based on the provided URLs and match status.
 \end{itemize}
 
 Figure~\ref{fig:poc_system} illustrates the architecture of the proof-of-concept (PoC) system, showing the interactions between the front-end, back-end, and various AWS services used for hosting and deployment.
