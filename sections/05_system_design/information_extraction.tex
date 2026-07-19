@@ -35,7 +35,7 @@ With this approach, the task essentially becomes a token classification problem,
     \item \textbf{\texttt{NULL-TOKEN}:} This category represents the tokens that do not belong to any of the above categories.
 \end{itemize}
 
-The \textttt{OUT-OF-STOCK-TOKEN} was selected as most sites do not explicitly mention the availability of a product, but rather indicate that a product is out of stock when it is unavailable for purchase.
+The \texttt{OUT-OF-STOCK-TOKEN} was selected as most sites do not explicitly mention the availability of a product, but rather indicate that a product is out of stock when it is unavailable for purchase.
 This token is identified by the presence of certain keywords in the HTML content, such as "out of stock", "unavailable", "sold out", etc.
 
 The implementation of this approach first involved the conversion of the labelled dataset into a format suitable for token classification, where each token in the HTML content is assigned a label corresponding to its category.
