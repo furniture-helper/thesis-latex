@@ -1,0 +1,54 @@
+\section{Information extraction}\label{sec:information_extraction_evaluation}
+
+The information extraction module extracts four key attributes from the product pages: the product's title, price, image URL, and availability status.
+Since all four of these attributes are independent, their extraction performance can be evaluated separately.
+As mentioned in section~\ref{subsec:information_extraction_training_phase}, this is fundamentally a token classification task, where each token in the HTML page is classified as either belonging to one of the four attributes or not.
+Therefore, we can track the F1-score for each of the four attributes separately, as well as the overall F1-score for the information extraction module.
+
+Table~\ref{tab:information-extraction-classification-report} shows the precision, recall, and F1-score for each label, along with the macro average.
+The overall F1-score for the information extraction module is 0.9700, which indicates that the module is able to accurately extract the required attributes from the product pages.
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{lrrr}
+        \toprule
+        \textbf{Label} & \textbf{Precision} & \textbf{Recall} & \textbf{F1} \\
+        \midrule
+        O & 0.9953 & 0.9931 & 0.9942 \\
+        B-TITLE & 0.9408 & 0.9420 & 0.9414 \\
+        B-PRICE & 0.9719 & 0.9745 & 0.9732 \\
+        B-IMAGE & 0.9310 & 0.9776 & 0.9537 \\
+        B-OUT\_OF\_STOCK & 0.9798 & 0.9949 & 0.9873 \\
+        \midrule
+        \textbf{MACRO} & \textbf{0.9638} & \textbf{0.9764} & \textbf{0.9700} \\
+        \bottomrule
+    \end{tabular}
+    \caption{Information extraction label-wise classification performance}
+    \label{tab:information-extraction-classification-report}
+\end{table}
+
+These figures may deviate slightly from the results reported in section~\ref{subsec:information_extraction_model_evaluation} due to the use of a larger training dataset and a different validation dataset for the evaluation of the information extraction module.
+
+As with the page classifier module, the information extraction module was also evaluated for its inference speed.
+Three of the last runs of the information extraction module were timed, and the time taken for each phase was recorded.
+Table~\ref{tab:information-extraction-runtime} summarizes the runtime across three runs.
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{lrrrrr}
+        \toprule
+        \textbf{Run} & \textbf{Pages} & \textbf{Generate Dataset (s)} & \textbf{Inference (s)} & \textbf{Update database (s)} & \textbf{Total (s)} \\
+        \midrule
+        1 & 26,010 & 570.30 & 1,501.08 & 104.00 & 2,175.38 \\
+        2 & 26,093 & 610.52 & 1,566.50 & 98.84 & 2,275.86 \\
+        3 & 27,148 & 660.53 & 1,571.18 & 98.79 & 2,330.51 \\
+        \midrule
+        \textbf{Total} & \textbf{79,251} & \textbf{1,841.35} & \textbf{4,638.76} & \textbf{301.63} & \textbf{6,781.74} \\
+        \bottomrule
+    \end{tabular}
+    \caption{Information extraction runtime by phase across runs}
+    \label{tab:information-extraction-runtime}
+\end{table}
+
+A total of \texttt{79,251} product pages were processed across the three runs, with a total runtime of \texttt{6,781.74} seconds.
+Therefore, for a batch of \texttt{20,000} product pages, the average runtime is \texttt{1,710.00} seconds, which is approximately \texttt{28.5} minutes.
