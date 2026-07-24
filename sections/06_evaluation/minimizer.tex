@@ -1,0 +1,54 @@
+\section{HTML Minimizer}\label{sec:html_minimizer}
+
+The main criterion for evaluating the performance of the HTML minimizer is the reduction in the size of the HTML content after minimization.
+The following metrics were used to evaluate the performance of the HTML minimizer:
+\begin{itemize}
+    \item The average size of the HTML content before minimization.
+    \item The average size of the HTML content after minimization.
+    \item The average percentage reduction in the size of the HTML content after minimization.
+    \item The amount of time taken to minimize the HTML content.
+\end{itemize}
+
+Table \ref{tab:html-minimizer-metrics} shows the metrics for the HTML content before and after minimization.
+These values were calculated based on the metrics available for the S3 buckets that store the HTML content before and after minimization.
+Here, we can see that the HTML minimizer was able to reduce the size of the HTML content by 98.16\%, which is a significant reduction in size.
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{lrr}
+        \toprule
+        \textbf{Metric} & \textbf{Original HTML} & \textbf{Minimized HTML} \\
+        \midrule
+        Number of documents & 370,803 & 249,131 \\
+        Total size (GB) & 141.13 & 1.74 \\
+        Average size per document (KB) & 399.48 & 7.35 \\
+        Percentage reduction & -- & 98.16\% \\
+        \bottomrule
+    \end{tabular}
+    \caption{HTML size metrics before and after minimization}
+    \label{tab:html-minimizer-metrics}
+\end{table}
+
+As for the time taken to minimize the HTML content, this was calculated by measuring the amount of time taken by the HTML minimizer across four different runs, and then calculating the average time taken per document.
+
+Table~\ref{tab:html-minimizer-runtime} summarizes the timing results across these runs.
+In order to minimize 20,000 documents, the HTML minimizer took an average of 768.21 seconds, which is approximately 12 minutes and 48 seconds.
+
+\begin{table}[H]
+    \centering
+    \small
+    \begin{tabular}{rrrr}
+        \toprule
+        \textbf{Run} & \textbf{Documents minimized} & \textbf{Time taken (s)} & \textbf{Avg. time per 20,000 docs (s)} \\
+        \midrule
+        1 & 4,814 & 182.00 & 756.13 \\
+        2 & 4,902 & 196.00 & 799.67 \\
+        3 & 4,322 & 167.00 & 772.79 \\
+        4 & 4,785 & 178.00 & 743.99 \\
+        \midrule
+        \textbf{Total} & \textbf{18,823} & \textbf{723.00} & \textbf{768.21} \\
+        \bottomrule
+    \end{tabular}
+    \caption{HTML minimizer timing across runs}
+    \label{tab:html-minimizer-runtime}
+\end{table}
