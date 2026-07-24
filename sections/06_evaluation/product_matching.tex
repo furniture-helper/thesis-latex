@@ -1,0 +1,17 @@
+\section{Product matching}\label{sec:product_matching_evaluation}
+
+The product matching module's performance can be evaluated by measuring different metrics.
+\begin{itemize}
+    \item The average similarity score between two products that are considered a match.
+    \item The average similarity score between two products that are considered not a match.
+    \item The F1 score for in detecting positive matches and negative matches.
+\end{itemize}
+
+For the evaluation of the product matching module, a dataset of \texttt{636} positive pairs and \texttt{1,136} negative pairs was used.
+With this dataset, the average similarity score for positive pairs was \texttt{0.89}, while the average similarity score for negative pairs was \texttt{0.44}.
+This is a difference of \texttt{0.45}, or \texttt{101.71\%}, which was significant enough to be able to distinguish between positive and negative pairs.
+The best threshold for the similarity score was found to be \texttt{0.764}, which was used to classify the pairs as positive or negative.
+Using this technique, the product matching module was able to obtain an F1 score of \texttt{0.88}.
+
+Since the product embeddings are pre-computed and stored in a database, the time taken to compute the similarity score between two products is negligible.
+Since the computation is a one-time operation, the time taken to perform this operation is not a significant factor in the evaluation of the product matching module.
