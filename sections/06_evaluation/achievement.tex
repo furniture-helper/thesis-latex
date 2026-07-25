@@ -1,0 +1,105 @@
+\section{Achievement of objectives and requirements}\label{sec:achievement_of_objectives_and_requirements}
+
+This section of the report presents the evaluation of the extent to which the proposed system meets the initial objectives and requirements as defined in Chapter~\ref{ch:problem_specification_and_requirements}.
+
+\subsection{Achievement of objectives}\label{subsec:achievement_of_objectives}
+
+\subsubsection{Web crawler}
+The primary objective of the web crawler was to be able to efficiently crawl multiple e-commerce platforms and collect page data.
+The designed distributed web crawler was able to crawl over 116,000 pages crawled across 36 different e-commerce websites.
+At its current implementation of one instance, each crawling 100 pages, being spun up every 3 minutes, it was able to crawl over 29,000 pages in a single day.
+
+\subsubsection{Boilerplate removal and HTML minimization}
+This was a secondary objective of the system, which was to be able to remove boilerplate content and minimize the HTML content of the crawled pages.
+The HTML minimizer algorithm was able to reduce the size of the HTML content by \texttt{98.16\%}, and was able to minimize batches of 20,000 documents in an average of \texttt{768.21 seconds}.
+
+\subsubsection{Page classification}
+The primary objective was to evaluate different page classification techniques and select the best performing model for deployment.
+The techniques tested were:
+\begin{itemize}
+    \item TF-IDF with traditional machine learning classifiers
+    \item BERT embeddings with a neural network classifier
+    \item MarkupLM for document classification
+\end{itemize}
+
+While the best performing model was the MarkupLM model, the selected model for deployment was the BERT embeddings with a neural network classifier, due to its balance between performance, speed, and cost.
+The final trained model for this task achieved an F1-score of \texttt{0.971}, and could classify batches of 20,000 documents in an average of \texttt{40.89 minutes}.
+
+\subsubsection{Information extraction}
+The primary objective was to evaluate different information extraction techniques and select the best performing model for deployment.
+The techniques tested were:
+\begin{itemize}
+    \item MarkupLM for token classification
+    \item Multi-modal approach with LayoutLMv3
+    \item LLM based approach
+\end{itemize}
+
+While the LLM based approach showed the best performance, the selected model for deployment was the MarkupLM model, due to its balance between performance, speed, and cost.
+The final trained model for this task achieved an overall F1-score of \texttt{0.970}, and could extract information from batches of 20,000 documents in an average of \texttt{28.5 minutes}.
+
+The results from this module also led into the price history tracking framework, which was able to keep records of price changes for a given product at a specific e-commerce platform.
+
+\subsubsection{Product matching}
+The primary objective was to evaluate different product matching techniques and select the best performing model for deployment.
+10 different techniques were tested, including those using string similarity algorithms such as trigram Jaccard similarity, edit distance, algorithms such as the BM-25 algorithm, and deep learning approaches using embeddings models such as BERT, RexBERT, and MarkupLM.
+
+The best performing technique was to use trigram Jaccard similarity to generate candidate matches, and then use fine-tuned RexBERT embedding model to generate vectors for the minimized page content, and then use cosine similarity to find the best matches.
+This technique was able to achieve an F1-score of \texttt{0.88}.
+
+\subsubsection{Proof-of-concept system}
+This was a secondary objective of the system, which was to implement a web-based application that allows users to search for products and view their historical prices across different platforms, as well as compare prices and identify the best deals available.
+The implemented system was able to retrieve price history for a given product at a specific retailer with a p95 response time of \texttt{224ms}, and was able to retrieve cross-site product matches for a given product with a p95 response time of \texttt{2,907ms}.
+
+\subsection{Achievement of requirements}\label{subsec:achievement_of_requirements}
+
+Table~\ref{tab:requirements-achievement} summarizes the extent to which each functional and non-functional requirement was achieved.
+
+\begin{table}[H]
+    \centering
+    \small
+    \renewcommand{\arraystretch}{1.3}
+    \begin{tabularx}{\textwidth}{p{0.48\textwidth} p{0.48\textwidth}}
+        \toprule
+        \textbf{Requirement} & \textbf{Achievement} \\
+        \midrule
+        Provided a set of seed URLs, the system must crawl each URL, render the page, and store its HTML content in a BLOB storage. &
+        \textbf{Achieved.} Pages are crawled at a rate of \texttt{29,000} pages per day and content is stored in an AWS S3 bucket. \\
+        \midrule
+        For each page crawled, the system must identify hyperlinks to other pages and add them to the crawling queue. &
+        \textbf{Achieved.} The crawler can identify outgoing hyperlinks from a page and add them to the queue. \\
+        \midrule
+        The system must be able to classify each crawled webpage as a product page or a non-product page. &
+        \textbf{Achieved.} The page classification module classifies \texttt{20,000} pages in \texttt{40.89} minutes with an F1 score of \texttt{0.971}. \\
+        \midrule
+        For each product page, the system must extract the product's title, current price, product image, and whether the product is in stock or out of stock. &
+        \textbf{Achieved.} The information extraction module processes \texttt{20,000} pages in \texttt{28.5} minutes with an F1 score of \texttt{0.970}. \\
+        \midrule
+        The system must be able to display the price-history of a product over time. &
+        \textbf{Achieved.} Using CDC on the extraction information table, the system tracks changing prices. \\
+        \midrule
+        Given a specific product from a specific e-commerce website, the system must be able to find the same product offered on other e-commerce websites. &
+        \textbf{Achieved.} The product matching module achieves an F1 score of \texttt{0.88}. \\
+        \midrule
+        The system must be able to track at least 50,000 products from at least 30 different e-commerce websites. &
+        \textbf{Achieved.} The system tracks \texttt{73,354} products across \texttt{36} e-commerce websites. \\
+        \midrule
+        The price of each product must be updated at least once every 72 hours. &
+        \textbf{Achieved.} \texttt{97.4\%} of all products were updated within \texttt{72} hours. \\
+        \midrule
+        The distributed crawler must ensure that the crawling process does not impact the performance of the target e-commerce websites, and must respect the robots.txt file of each website. &
+        \textbf{Partially achieved.} This is difficult to measure directly because infrastructure metrics are not available for target websites.
+        However, backoff mechanisms are implemented to minimize impact on target servers. \\
+        \midrule
+        The system must be able to retrieve the price history for a product in under 500 milliseconds. &
+        \textbf{Achieved.} p95 response time for price history retrieval was \texttt{224ms}. \\
+        \midrule
+        The system must be able to find the same product offered on other e-commerce websites in under 2 seconds. &
+        \textbf{Not achieved.} p95 response time for similar product retrieval was \texttt{2,907ms}. \\
+        \midrule
+        The system must be implemented at a low cost of under USD 300 per month, including cloud hosting and storage costs. &
+         \\
+        \bottomrule
+    \end{tabularx}
+    \caption{Requirement achievement summary}
+    \label{tab:requirements-achievement}
+\end{table}
