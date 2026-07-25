@@ -1,8 +1,10 @@
-\chapter{System design}
-\label{chap:system_design}
+\chapter{Conclusions and Future Work}
+\label{ch:conclusions}
 
-The proposed system consists of seven different modules, each of which is responsible for a specific task.
-The modules are interconnected and work together to achieve the overall functionality of the system. The modules are as follows:
+This report details the development of big data framework which can be purposed for the collection, processing, and analysis of e-commerce sites in order to track price history of products and identify the same products across different platforms.
+The framework is designed to be scalable, efficient, and cost-effective, and can be used to extract valuable insights from large volumes of e-commerce data.
+
+The framework consists of seven modules, each of which is responsible for accomplish a specific sub-task, and together they form a complete system for crawling, processing, and analyzing e-commerce data.
 \begin{enumerate}
     \item The \textbf{Distributed web crawler} module is responsible for crawling the selected websites and collecting the HTML content of each page.
     It uses a distributed architecture to efficiently handle large numbers of pages and minimize duplicate crawls.
@@ -20,16 +22,13 @@ The modules are interconnected and work together to achieve the overall function
     \item The \textbf{Product matching} module is responsible for identifying and linking identical products across different websites.
 
     \item The \textbf{Proof-of-concept (PoC) system} is a web-based application that allows users to search for products, analyze their price history, and compare prices across different websites.
-
 \end{enumerate}
 
-The following sections provide a detailed description of each module and its functionality.
+While this report outlines its implementation across 36 Sri Lankan e-commerce websites, mostly centered around consumer electronics, this framework can be extended with minor adjustments to additional e-commerce platforms, and to other product categories, such as fashion, groceries, and home appliances.
 
-\input{sections/05_system_design/database}
-\input{sections/05_system_design/crawler}
-\input{sections/05_system_design/minimizer}
-\input{sections/05_system_design/labeller}
-\input{sections/05_system_design/page_classifier}
-\input{sections/05_system_design/information_extraction}
-\input{sections/05_system_design/product_matching}
-\input{sections/05_system_design/poc_system}
+Systems such as this can be used to provide consumers with valuable insights into the pricing trends of products, and can help them make informed purchasing decisions, ensuring that they are getting the best value for their money.
+Moreover, it can also be an effective counter to the issues of price discrimination and fake discounts, which are prevalent in the e-commerce industry.
+
+\input{sections/07_conclusions/impact}
+\input{sections/07_conclusions/issues}
+\input{sections/07_conclusions/future_work}
