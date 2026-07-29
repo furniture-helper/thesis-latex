@@ -16,6 +16,7 @@
 \usepackage{amsopn}
 \usepackage{amstext}
 \usepackage{tocloft}
+\usepackage{tikz}
 \setlength{\cftbeforesecskip}{0pt}
 \setlength{\cftbeforesubsecskip}{0pt}
 
@@ -47,7 +48,11 @@
 
 \begin{document}
 
-    \maketitle
+    \include{title_page}
+    \include{declaration_page}
+    \include{sections/acknowledgement}
+    \include{sections/abstract}
+
     \tableofcontents
 
     \include{sections/01_introduction/_introduction}

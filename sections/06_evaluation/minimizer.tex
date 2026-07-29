@@ -19,7 +19,7 @@ Here, we can see that the HTML minimizer was able to reduce the size of the HTML
         \toprule
         \textbf{Metric} & \textbf{Original HTML} & \textbf{Minimized HTML} \\
         \midrule
-        Number of documents & 370,803 & 249,131 \\
+        Number of documents & 370,803\footnotemark[1] & 249,131\footnotemark[1] \\
         Total size (GB) & 141.13 & 1.74 \\
         Average size per document (KB) & 399.48 & 7.35 \\
         Percentage reduction & -- & 98.16\% \\
@@ -28,6 +28,8 @@ Here, we can see that the HTML minimizer was able to reduce the size of the HTML
     \caption{HTML size metrics before and after minimization}
     \label{tab:html-minimizer-metrics}
 \end{table}
+
+\footnotetext[1]{The number of pages stored is significantly higher than the number of URLs crawled as mentioned in Table \ref{tab:crawler_last_updated_24h} as there are some URLs which were initially crawled but were later removed from the crawling queue due to various reasons, such as being removed from the site, identified as duplicates, or leading to error pages, malicious pages, or being from sites which were considered, but later removed from the project.}
 
 As for the time taken to minimize the HTML content, this was calculated by measuring the amount of time taken by the HTML minimizer across four different runs, and then calculating the average time taken per document.
 

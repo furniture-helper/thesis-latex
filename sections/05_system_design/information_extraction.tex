@@ -109,7 +109,7 @@ The LLM was able to accurately extract product information from the HTML content
 
 \subsection{Model evaluation and selection}\label{subsec:information_extraction_model_evaluation}
 The three approaches were evaluated using a separate validation dataset, and the best performing model was selected for deployment.
-For this phase, only the extraction of the product title and price was considered, as the extraction of the product image and availability was not a priority for the proof-of-concept system.
+For this phase, only the extraction of the product title and price was considered, as the extraction of the product image and availability was considered the most important\footnote{While the extraction of the product image and availability is part of the functional requirements of the system, only the title and price extraction was considered for the model comparison and selection phase as expanding this models to include image and availability extraction would require additional resources and time, and the performance for title and price extraction should correlate with the performance for image and availability extraction as they are all token classification tasks. The complete performance of the final model used is described in Section~\ref{sec:information_extraction_evaluation}} for the proof-of-concept system.
 
 The comparative results are summarized in Table~\ref{tab:information_extraction_results}.
 
@@ -128,8 +128,8 @@ The comparative results are summarized in Table~\ref{tab:information_extraction_
         \begin{minipage}[t]{\linewidth}\centering 7 mins\\\$0.18\end{minipage} \\
         \midrule
         Multi-modal &
-        0.866* &
-        0.785* &
+        0.866\textsuperscript{1} &
+        0.785\textsuperscript{1} &
         \begin{minipage}[t]{\linewidth}\centering 121 mins\\\$0.88\end{minipage} &
         \begin{minipage}[t]{\linewidth}\centering 13 mins\\\$0.34\end{minipage} \\
         \midrule
@@ -137,25 +137,24 @@ The comparative results are summarized in Table~\ref{tab:information_extraction_
         0.935 &
         0.970 &
         \begin{minipage}[t]{\linewidth}\centering 10 mins\\\$0.04\end{minipage} &
-        \begin{minipage}[t]{\linewidth}\centering 883 mins**\\\$85.85**\end{minipage} \\
+        \begin{minipage}[t]{\linewidth}\centering 883 mins\textsuperscript{2}\\\$85.85\textsuperscript{2}\end{minipage} \\
         \midrule
         LLM (Gemini 2.5 Flash) &
         0.975 &
         0.960 &
         \begin{minipage}[t]{\linewidth}\centering 10 mins\\\$0.04\end{minipage} &
-        \begin{minipage}[t]{\linewidth}\centering 1,576 mins**\\\$281.68**\end{minipage} \\
+        \begin{minipage}[t]{\linewidth}\centering 1,576 mins\textsuperscript{2}\\\$281.68\textsuperscript{2}\end{minipage} \\
         \bottomrule
     \end{tabularx}
+    \par\vspace{0.4em}
+    \raggedright\footnotesize
+    \textsuperscript{1} The performance of the multi-modal model could be improved with further training and fine-tuning, but not enough to justify the additional cost.\\
+    \textsuperscript{2} Extraction time and cost for the LLM approaches are estimated based on a sample of 200 pages, and could be improved through parallelization.
     \caption{Comparison of information extraction approaches}
     \label{tab:information_extraction_results}
 \end{table}
 
 \noindent All models were trained and then tested against data from websites they had not been exposed to.
-\begin{itemize}
-    \item[*] The performance of the multi-modal model could be improved with further training and fine-tuning, but not enough to justify the additional cost.
-    \item[**] Extraction time and cost for the LLM approaches are estimated based on a sample of 200 pages.
-    \item[**] Extraction time for the LLM approaches could be improved through parallelization.
-\end{itemize}
 
 Although the LLM based approach achieved the highest accuracy for both title and price extraction, it was not selected for deployment due to its high inference time and cost.
 The MarkupLM approach was selected for deployment as it achieved a good balance between accuracy, inference time, and cost, making it suitable for the information extraction task in the proposed system.
@@ -204,18 +203,18 @@ CREATE OR REPLACE FUNCTION record_price_change()
     RETURNS TRIGGER AS
 $$
 BEGIN
-    INSERT INTO product_price_history (url, price, recorded_at)
+    INSERT INTO price_history (url, price, recorded_at)
     VALUES (NEW.url, NEW.product_price, NOW());
 
     RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
 
-DROP TRIGGER IF EXISTS trg_record_price_changes ON page_inferred_labels;
+DROP TRIGGER IF EXISTS trg_record_price_changes ON product_information;
 
 CREATE TRIGGER trg_record_price_changes
     AFTER INSERT OR UPDATE
-    ON page_inferred_labels
+    ON product_information
     FOR EACH ROW
 EXECUTE FUNCTION record_price_change();
 \end{lstlisting}

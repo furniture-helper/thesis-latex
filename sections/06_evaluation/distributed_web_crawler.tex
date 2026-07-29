@@ -76,8 +76,8 @@ Of which,
     \item \texttt{30} were HTTP 429 errors, which indicates that the crawler was rate-limited by the target website due to too many requests being sent in a short period of time.
 \end{itemize}
 
-Out of the total of 116,962 unique URLs crawled, \texttt{72,899} were classified as product pages, while \texttt{44,063} were classified as non-product pages.
-If only the product pages are considered, within the last 3 days, a total of \texttt{71,241} URLs were crawled, which means that \texttt{1,658} pages missed the 72-hour update requirement.
+Out of the total of 116,962 unique URLs crawled, \texttt{73,354} were classified as product pages, while \texttt{44,063} were classified as non-product pages.
+If only the product pages are considered, within the last 3 days, a total of \texttt{71,696} URLs were crawled, which means that \texttt{1,658} pages missed the 72-hour update requirement.
 Of these, \texttt{1,651} were from a single domain (\texttt{lifemobile.lk}), which seems to have implemented aggressive anti-bot measures, preventing the crawler from accessing and crawling the product pages on their website.
 
 Figure~\ref{fig:crawler_velocity} shows the velocity of the distributed web crawler over a period of 30 days, which represents the number of unique URLs in 30-minute intervals that were successfully crawled and stored in the database along with a moving average of the velocity over a 24-hour period.
