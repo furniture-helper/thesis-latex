@@ -1,1 +1,115 @@
 \section{Cost analysis}\label{sec:cost_analysis}
+
+\subsection{Recurring costs}\label{subsec:recurring-costs}
+These are the costs that are incurred on a daily basis due to the continuous operation of the system.
+Table~\ref{tab:system-cost-breakdown} summarizes the operational cost over a 3-day window and the equivalent daily cost.
+
+\begin{table}[t]
+    \centering
+    \scriptsize
+    \renewcommand{\arraystretch}{1.1}
+    \begin{tabularx}{\textwidth}{p{2.9cm} p{3.8cm} p{3.3cm} >{\raggedleft\arraybackslash}p{2.2cm} >{\raggedleft\arraybackslash}p{2.1cm}}
+        \toprule
+        \textbf{Component} & \textbf{Sub category} & \textbf{AWS service} & \textbf{3-day cost (USD)} & \textbf{Daily cost (USD)} \\
+        \midrule
+        Distributed web crawler & Crawler instances & ECS (Fargate Spot) & \$5.21 & \$1.74 \\
+         & IPv4 address use & VPC & \$2.37 & \$0.79 \\
+         & Cross regional data transfer & VPC & \$2.27 & \$0.76 \\
+         & Data ingress & S3 & \$0.52 & \$0.17 \\
+         & Queue manager & SQS & \$0.09 & \$0.03 \\
+        \midrule
+         &  & \textbf{Subtotal} & \textbf{\$10.46} & \textbf{\$3.49} \\
+        \midrule
+        HTML minimizer & Minimizer instances & ECS (Fargate Spot) & \$0.23 & \$0.08 \\
+         & Data ingress & S3 & \$0.54 & \$0.18 \\
+        \midrule
+         &  & \textbf{Subtotal} & \textbf{\$0.77} & \textbf{\$0.26} \\
+        \midrule
+        Page classification & Inference & SageMaker processing job & \$0.87 & \$0.29 \\
+         & Generate dataset & SageMaker processing job & \$0.35 & \$0.12 \\
+         & Upload to database & SageMaker processing job & \$0.01 & \$0.00 \\
+         & Data ingress & S3 & \$0.04 & \$0.01 \\
+        \midrule
+         &  & \textbf{Subtotal} & \textbf{\$1.27} & \textbf{\$0.42} \\
+        \midrule
+        Information extraction & Inference & SageMaker processing job & \$0.95 & \$0.32 \\
+         & Generate dataset & SageMaker processing job & \$0.12 & \$0.04 \\
+         & Upload to database & SageMaker processing job & \$0.01 & \$0.00 \\
+         & Data ingress & S3 & \$0.04 & \$0.01 \\
+        \midrule
+         &  & \textbf{Subtotal} & \textbf{\$1.12} & \textbf{\$0.37} \\
+        \midrule
+        Database & Database instance & RDS & \$2.52 & \$0.84 \\
+         & Storage & EBS & \$0.63 & \$0.21 \\
+         & Data transfer & VPC & \$0.43 & \$0.14 \\
+         & Backups & RDS & \$0.19 & \$0.06 \\
+        \midrule
+         &  & \textbf{Subtotal} & \textbf{\$3.77} & \textbf{\$1.26} \\
+        \midrule
+        Object storage & Raw HTML storage & S3 & \$0.24 & \$0.08 \\
+         & Minimized HTML storage & S3 & \$0.01 & \$0.00 \\
+         & Model storage & S3 & \$0.25 & \$0.08 \\
+        \midrule
+         &  & \textbf{Subtotal} & \textbf{\$0.50} & \textbf{\$0.17} \\
+        \midrule
+        Other & Key/secret management & KMS & \$0.15 & \$0.05 \\
+         & Image storage & ECR & \$0.02 & \$0.01 \\
+         & Miscellaneous & - & \$0.06 & \$0.02 \\
+        \midrule
+         &  & \textbf{Subtotal} & \textbf{\$0.23} & \textbf{\$0.08} \\
+        \midrule
+        \textbf{TOTAL} &  &  & \textbf{\$18.12} & \textbf{\$6.04} \\
+        \bottomrule
+    \end{tabularx}
+    \caption{3-day and daily cost breakdown by module}
+    \label{tab:system-cost-breakdown}
+\end{table}
+
+
+Here, we can see that nearly 60\% of the total cost is attributed to the distributed web crawler, which is expected given that it is the most resource-intensive component of the system.
+The database also incurs a high proportion of the total cost, which is expected given that it is a component that is shared across all modules of the system.
+A few modules of the system are not included in this cost analysis, as they are either part of the development process, are one-time costs (e.g., model training), or their costs are negligible (e.g., the web application).
+\begin{itemize}
+    \item The data labeller module is not included as it is entirely hosted on AWS Amplify, which is expensed based on usage and is not a significant cost contributor.
+    \item The product matching module is not included as it is a one-time cost for model training, and the inference in a one-time operation which was conducted on a local machine.
+    \item The proof-of-concept web application is not included as it is entirely hosted on AWS Amplify, and AWS Lambda, which are expensed based on usage and are not significant cost contributors.
+\end{itemize}
+
+Figure~\ref{fig:cost-breakdown-charts} visualizes the daily cost split by component and by AWS service.
+
+\begin{figure}[H]
+    \centering
+    \begin{minipage}[t]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{images/cost_by_component}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[t]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{images/cost_by_service}
+    \end{minipage}
+    \caption{Daily cost distribution by component (left) and by AWS service (right)}
+    \label{fig:cost-breakdown-charts}
+\end{figure}
+
+\subsection{One-time costs}\label{subsec:one-time-costs}
+These are the costs that are incurred during the development phase of the system, and are not recurring costs.
+These are generally the costs associated with model training and hyperparameter tuning.
+These are generally highly variable, and depend on the size of the dataset, the complexity of the model, and the number of hyperparameter tuning iterations.
+All three models were trained/fine-tuned on AWS SageMaker using Hyperparameter tuning jobs, and the cost of the last three training runs for each model is summarized in Table~\ref{tab:one-time-costs}.
+
+\begin{table}[H]
+    \centering
+    \small
+    \begin{tabularx}{0.7\textwidth}{X >{\raggedleft\arraybackslash}p{3.2cm}}
+        \toprule
+        \textbf{Model} & \textbf{Training cost (USD)} \\
+        \midrule
+        Page classification model & \$10.05 \\
+        Information extraction model & \$5.55 \\
+        Product matching embedding model & \$2.36 \\
+        \bottomrule
+    \end{tabularx}
+    \caption{One-time training costs by model}
+    \label{tab:one-time-costs}
+\end{table}
