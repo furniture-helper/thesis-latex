@@ -1,4 +1,4 @@
-\section{HTML minimizer}\label{sec:html_minimizer}
+\section{HTML Minimizer}\label{sec:html_minimizer}
 
 The HTML minimizer module is responsible for removing boilerplate content from the crawled HTML pages, retaining only the relevant content for further processing.
 This module is crucial for improving the efficiency and accuracy of the subsequent page classification and information extraction tasks.
@@ -22,7 +22,7 @@ The HTML minimizer module consists of three main subcomponents:
     The minimized pages are then stored in an S3 bucket for further processing by the page classifier, information extractor, and product matching modules.
 \end{itemize}
 
-\subsection{Boilerplate removal library}\label{subsec:boilerplate_removal_library}
+\subsection{Boilerplate Removal Library}\label{subsec:boilerplate_removal_library}
 
 This library implements a variation of the site style trees algorithm for boilerplate removal.
 Given the HTML content from a web page, the library first runs a pre-processing step to clean the HTML and remove any unnecessary elements, such as scripts and styles.
@@ -73,7 +73,7 @@ Figure~\ref{fig:minimized_page_generation} illustrates how a minimized page is g
     \label{fig:minimized_page_generation}
 \end{figure}
 
-\subsection{Anchor tree generation}\label{subsec:anchor_tree_generation}
+\subsection{Anchor Tree Generation}\label{subsec:anchor_tree_generation}
 
 As described above, anchor trees are generated for each domain by taking a random sample of 100 pages from the domain and constructing site style trees for each page.
 These anchor trees are then stored in an S3.
@@ -86,7 +86,7 @@ Figure~\ref{fig:anchor_tree_generation} illustrates how anchor trees are generat
     \label{fig:anchor_tree_generation}
 \end{figure}
 
-\subsection{HTML minimizer workers}\label{subsec:html_minimizer_workers}
+\subsection{HTML Minimizer Workers}\label{subsec:html_minimizer_workers}
 
 The HTML minimizer workers are AWS ECS tasks which implement the above boilerplate removal library and well as the pre-generated anchor trees to generate minimized versions of recently crawled pages.
 The workers run on a schedule, fetching all pages which have been crawled but not yet minimized in batches of 20,000 pages per run.
@@ -110,7 +110,7 @@ Figure~\ref{fig:html_minimizer_workers} illustrates how an HTML minimizer worker
     \label{fig:html_minimizer_workers}
 \end{figure}
 
-\subsection{HTML minimizer architecture}\label{subsec:html_minimizer_architecture}
+\subsection{HTML Minimizer Architecture}\label{subsec:html_minimizer_architecture}
 
 Figure~\ref{fig:html_minimizer_architecture} illustrates the architecture of the HTML minimizer module, which consists of the boilerplate removal library, anchor tree generation, and HTML minimizer workers, and how they interact with the database and S3 buckets to process crawled pages and generate minimized versions of the HTML pages.
 

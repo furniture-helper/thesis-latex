@@ -1,0 +1,26 @@
+\chapter{Source Code}\label{app:source_code}
+
+This appendix lists the main GitHub repositories used to maintain the source code of the system components.
+
+\begin{table}[H]
+    \centering
+    \small
+    \renewcommand{\arraystretch}{1.2}
+    \begin{tabularx}{\textwidth}{p{3.3cm} X X}
+        \toprule
+        \textbf{Component} & \textbf{Repository Link} & \textbf{Description} \\
+        \midrule
+        Web crawler & \url{https://github.com/furniture-helper/furniture-crawler} & Contains the code for a Typescript application which crawls a set of URLs retrieved from an SQS queue. \\
+        Crawler queue manager & \url{https://github.com/furniture-helper/furniture-crawler-queue-manger} & Contains the code for a simple script written in Go which populates the crawler SQS queue. \\
+        Boilerplate removal library & \url{https://github.com/furniture-helper/html-boilerplate-remover} & Contains the source code for a Python library which implements site style trees to minimize HTML content. \\
+        HTML minimizer & \url{https://github.com/furniture-helper/html-minimizer} & Contains the code for a Python application which uses the boilerplate removal library to minimize a set of raw HTML pages. \\
+        Labeller application & \url{https://github.com/furniture-helper/furniture-labeller} & Contains the source code for a NextJS web application which is used to manually label product data. \\
+        Sagemaker jobs & \url{https://github.com/furniture-helper/furniture-ir-model} & Contains the Python code/notebooks required to train and compare different types of models for page classification, information extraction, and product matching. Also includes the scripts required for inference. \\
+        PoC UI & \url{https://github.com/furniture-helper/furniture-search-frontend} & Contains the source code for a NextJS web application which acts as the frontend for the proof of concept system. \\
+        PoC API & \url{https://github.com/furniture-helper/furniture-search-api} & Contains the code for an API written in Go which acts as the backend for the proof of concept system. \\
+        Infrastructure as code & \url{https://github.com/furniture-helper/furniture-iac} & Contains the terraform code required to deploy the entire system on AWS. \\
+        \bottomrule
+    \end{tabularx}
+    \caption{Source code repositories by component}
+    \label{tab:source-code-repositories}
+\end{table}

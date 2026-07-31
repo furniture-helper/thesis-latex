@@ -1,4 +1,4 @@
-\section{Page classifier}\label{sec:page_classifier}
+\section{Page Classifier}\label{sec:page_classifier}
 
 The page classifier module is responsible for classifying the crawled pages into product pages and non-product pages - which is essentially a binary classification problem.
 This module is crucial for filtering out irrelevant pages and ensuring that only product pages are processed by the information extractor and product matching modules.
@@ -14,7 +14,7 @@ This takes place in three phases.
     \item \textbf{Inference phase:} In this phase, the trained page classifier is used to classify new crawled pages into product pages and non-product pages.
 \end{enumerate}
 
-\subsection{Training phase}\label{subsec:page_classifier_training_phase}
+\subsection{Training Phase}\label{subsec:page_classifier_training_phase}
 
 Since the data is unstructured and the HTML pages can vary significantly in terms of content and structure, a deep learning approach is used for the page classification task.
 For this purpose, three different model architectures were trained and evaluated.
@@ -34,7 +34,7 @@ In each of the above approaches, the model's hyperparameters were tuned using a 
     \label{fig:page_classifier_training_phase}
 \end{figure}
 
-\subsection{Model evaluation and selection}\label{subsec:page_classifier_model_evaluation}
+\subsection{Model Evaluation and Selection}\label{subsec:page_classifier_model_evaluation}
 
 The results of the best performing model for each approach are summarized in Table~\ref{tab:page_classifier_results}.
 While the F1-score is the primary metric for evaluating the model's performance, other factors such as training and inference speed, as well as cost, were also considered when selecting the best model for deployment.
@@ -45,7 +45,7 @@ While the F1-score is the primary metric for evaluating the model's performance,
     \renewcommand{\arraystretch}{1.4}
     \begin{tabularx}{\textwidth}{p{4cm} p{1.8cm} X X}
         \toprule
-        \textbf{Technique} & \textbf{F1 score} & \textbf{Pros} & \textbf{Cons} \\
+        \textbf{Technique} & \textbf{F1 Score} & \textbf{Pros} & \textbf{Cons} \\
         \midrule
         TF-IDF with Random Forest Regressor &
         0.930 &
@@ -69,7 +69,7 @@ While the F1-score is the primary metric for evaluating the model's performance,
 
 Based on the results in Table~\ref{tab:page_classifier_results}, the BERT embeddings with a neural network classifier approach was selected for deployment in the inference phase, as it provides a good balance between accuracy, speed, and cost.
 
-\subsection{Inference phase}\label{subsec:page_classifier_inference_phase}
+\subsection{Inference Phase}\label{subsec:page_classifier_inference_phase}
 
 The inference phase involves using the best performing model from the training phase to classify new crawled pages as product pages or non-product pages.
 This is implemented as a scheduled batch job that runs once a day.
@@ -93,7 +93,7 @@ Figure ~\ref{fig:page_classifier_inference_phase} illustrates the overall archit
     \label{fig:page_classifier_inference_phase}
 \end{figure}
 
-\subsection{Page classifier architecture}\label{subsec:page_classifier_architecture}
+\subsection{Page Classifier Architecture}\label{subsec:page_classifier_architecture}
 
 The page classifier architecture is designed to be scalable and efficient, allowing for the processing of large volumes of crawled pages in a timely manner.
 Figure~\ref{fig:page_classifier_architecture} illustrates the overall architecture of the page classifier module, which includes the different components involved in the training and inference phases, as well as the interactions with the database and S3 buckets.

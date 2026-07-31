@@ -1,4 +1,4 @@
-\section{Information extraction}\label{sec:information_extraction}
+\section{Information Extraction}\label{sec:information_extraction}
 
 The information extraction module is responsible for extracting relevant product information from the product pages, such as the name of the product, its price, image, and availability.
 Similar to the page classifier module, the information extraction module is also trained using a labelled dataset of HTML pages, which is created using the data annotation application.
@@ -14,7 +14,7 @@ The information extraction process takes place in three phases.
     \item \textbf{Price history tracking}: In this phase, whenever a product's information is extracted, its price is recorded with the timestamp so that its historical price can be tracked.
 \end{enumerate}
 
-\subsection{Training phase}\label{subsec:information_extraction_training_phase}
+\subsection{Training Phase}\label{subsec:information_extraction_training_phase}
 
 Since the dataset is once again unstructured, consisting of HTML pages with varying content and structure, a deep learning approach is used for the information extraction task as well.
 For the information extraction task, three different techniques were trained and evaluated.
@@ -24,7 +24,7 @@ For the information extraction task, three different techniques were trained and
     \item \textbf{LLM based approach:} This approach involves using a large language model (LLM) to extract product information from the HTML pages by leveraging its natural language understanding capabilities.
 \end{itemize}
 
-\subsubsection{Using MarkupLM for token classification}
+\subsubsection{Using MarkupLM for Token Classification}
 MarkupLM is a pre-trained model that is specifically designed for processing HTML/XML documents, and it has been shown to perform well on various document understanding tasks.
 With this approach, the task essentially becomes a token classification problem, where each token in the HTML content is classified into one of the product information categories.
 \begin{itemize}
@@ -39,7 +39,7 @@ The \texttt{OUT-OF-STOCK-TOKEN} was selected as most sites do not explicitly men
 This token is identified by the presence of certain keywords in the HTML content, such as "out of stock", "unavailable", "sold out", etc.
 
 The implementation of this approach first involved the conversion of the labelled dataset into a format suitable for token classification, where each token in the HTML content is assigned a label corresponding to its category.
-This was done via\. a custom pre-processing script that tokenizes the HTML content of a minimized page and assigns labels to each token based on the annotated product information in the labelled dataset.
+This was done via a custom pre-processing script that tokenizes the HTML content of a minimized page and assigns labels to each token based on the annotated product information in the labelled dataset.
 For example, for the product title, there would be two types of tokens named \texttt{B-TITLE} and \texttt{I-TITLE}, where \texttt{B-TITLE} represents the first token of the product title and \texttt{I-TITLE} represents the subsequent tokens of the product title.
 Figure~\ref{fig:information_extraction_markuplm_training} illustrates how the pre-processing script would assign labels to the tokens in the HTML content of a minimized page based on the annotated product information in the labelled dataset.
 
@@ -62,7 +62,7 @@ Figure ~\ref{fig:markuplm_extraction_model_training} illustrates how the MarkupL
 \end{figure}
 
 During the training phase, it was observed that the MarkupLM model did not perform well at classifying the tokens correctly.
-This waa primarily due to the high cardinality of the token classes, with two classes for each product information category (e.g., \texttt{B-TITLE} and \texttt{I-TITLE} for the product title), which made it difficult for the model to learn the correct token classifications.
+This was primarily due to the high cardinality of the token classes, with two classes for each product information category (e.g., \texttt{B-TITLE} and \texttt{I-TITLE} for the product title), which made it difficult for the model to learn the correct token classifications.
 The solution was to drop the~\texttt{I-} classes and keep only the \texttt{B-} classes for each product information category, which reduced the number of token classes and improved the model's performance.
 Figure~\ref{fig:information_extraction_model_training} illustrates how the pre-processing script would assign labels to the tokens in the HTML content of a minimized page based on the annotated product information in the labelled dataset, with only the \texttt{B-} classes.
 
@@ -75,7 +75,7 @@ Figure~\ref{fig:information_extraction_model_training} illustrates how the pre-p
 
 With this tokenized dataset, the performance of the model improved significantly, and the model was able to accurately classify the tokens in the HTML content into the correct product information categories.
 
-\subsubsection{Multi-modal approach with LayoutLMv3}
+\subsubsection{Multi-Modal Approach with LayoutLMv3}
 
 This approach involved using a multi-modal model that combines textual and visual information from the HTML pages to extract product information.
 The LayoutLMv3 model was used for this purpose, which is a pre-trained model that is specifically designed for document understanding tasks that involve both textual and visual information.
@@ -100,14 +100,14 @@ Figure~\ref{fig:layoutlmv3_extraction_model_training} illustrates how the pre-pr
 After this pre-processing stage, the LayoutLMv3 model was fine-tuned for the information extraction task using the labelled dataset of HTML pages, similar to the MarkupLM approach.
 The hyperparameters of the LayoutLMv3 model were also tuned using a grid search approach available in AWS SageMaker.
 
-\subsubsection{LLM based approach}
+\subsubsection{LLM-Based Approach}
 
 The LLM based approach was comparatively simpler than the other two approaches, as it did not require any pre-processing of the HTML content or the training/fine-tuning of a model.
 Instead, the LLM was used to extract product information from the HTML content of a product page by providing it with a prompt that describes the task and the expected output format.
 Two LLM models were evaluated for this approach, Google's Gemini 2.5 Flash Lite and Google's Gemini 2.5 Flash.
 The LLM was able to accurately extract product information from the HTML content by leveraging its natural language understanding capabilities.
 
-\subsection{Model evaluation and selection}\label{subsec:information_extraction_model_evaluation}
+\subsection{Model Evaluation and Selection}\label{subsec:information_extraction_model_evaluation}
 The three approaches were evaluated using a separate validation dataset, and the best performing model was selected for deployment.
 For this phase, only the extraction of the product title and price was considered, as the extraction of the product image and availability was considered the most important\footnote{While the extraction of the product image and availability is part of the functional requirements of the system, only the title and price extraction was considered for the model comparison and selection phase as expanding this models to include image and availability extraction would require additional resources and time, and the performance for title and price extraction should correlate with the performance for image and availability extraction as they are all token classification tasks. The complete performance of the final model used is described in Section~\ref{sec:information_extraction_evaluation}} for the proof-of-concept system.
 
@@ -159,7 +159,7 @@ The comparative results are summarized in Table~\ref{tab:information_extraction_
 Although the LLM based approach achieved the highest accuracy for both title and price extraction, it was not selected for deployment due to its high inference time and cost.
 The MarkupLM approach was selected for deployment as it achieved a good balance between accuracy, inference time, and cost, making it suitable for the information extraction task in the proposed system.
 
-\subsection{Inference phase}\label{subsec:information_extraction_inference_phase}
+\subsection{Inference Phase}\label{subsec:information_extraction_inference_phase}
 In the inference phase, the trained MarkupLM model is used to extract relevant product information from newly crawled product pages.
 The inference process involves the following steps:
 \begin{enumerate}
@@ -192,7 +192,7 @@ Figure ~\ref{fig:information_extraction_inference_phase} illustrates the post-pr
     \label{fig:information_extraction_inference_phase}
 \end{figure}
 
-\subsection{Price history tracking} \label{subsec:price_history_tracking}
+\subsection{Price History Tracking} \label{subsec:price_history_tracking}
 Price history tracking is implemented by using Change Data Capture (CDC) on the product information table.
 Whenever a product is updated, its new price is recorded with the last crawled timestamp in the price history table.
 This is implemented by using PostgreSQL triggers as shown in Listing~\ref{lst:record_price_change}.
@@ -219,7 +219,7 @@ CREATE TRIGGER trg_record_price_changes
 EXECUTE FUNCTION record_price_change();
 \end{lstlisting}
 
-\subsection{Information extraction module architecture} \label{subsec:information_extraction_module_architecture}
+\subsection{Information Extraction Module Architecture} \label{subsec:information_extraction_module_architecture}
 
 Figure~\ref{fig:information_extraction_module_architecture} illustrates the architecture of the information extraction module, which includes the training phase, inference phase, and price history tracking and how they interact with each other.
 

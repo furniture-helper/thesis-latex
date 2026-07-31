@@ -1,8 +1,8 @@
-\section{Page classifier}\label{sec:page_classifier_evaluation}
+\section{Page Classifier}\label{sec:page_classifier_evaluation}
 
 The main metric which can be used to evaluate the performance of the page classifier is the F1 score, which is a measure of the accuracy of the classifier.
 The page classification model, which was trained and evaluated on a dataset of \texttt{2,430} product pages and \texttt{1,014} non-product pages, achieved an F1 score of \texttt{0.971} on the validation dataset, which is a good indication of the model's performance.
-These figures may deviate slightly with those in Section~\ref{subsec:page_classifier_model_evaluation} due to the fact that the model was retrained on a larger dataset, which was not available at the of initial model comparison phase.
+These figures may deviate slightly from those in Section~\ref{subsec:page_classifier_model_evaluation} because the model was retrained on a larger dataset, which was not available during the initial model comparison phase.
 
 Another important metric to consider is the time taken to classify a batch of pages, which is a measure of the speed of the classifier.
 The page classification inference task is executed in three phases, as described in Section~\ref{subsec:page_classifier_inference_phase}.
@@ -14,7 +14,7 @@ This represents an average time of \texttt{40.89} minutes to classify \texttt{20
     \centering
     \begin{tabular}{lrrrrr}
         \toprule
-        \textbf{Run} & \textbf{Pages} & \textbf{Generate Dataset (s)} & \textbf{Inference (s)} & \textbf{Update database (s)} & \textbf{Total (s)} \\
+        \textbf{Run} & \textbf{Pages} & \textbf{Generate Dataset (s)} & \textbf{Inference (s)} & \textbf{Update Database (s)} & \textbf{Total (s)} \\
         \midrule
         1 & 18,664 & 1,187.26 & 1,456.42 & 88.72 & 2,732.40 \\
         2 & 30,210 & 1,299.50 & 1,426.75 & 79.03 & 2,805.28 \\

@@ -1,6 +1,6 @@
-\section{Cost analysis}\label{sec:cost_analysis}
+\section{Cost Analysis}\label{sec:cost_analysis}
 
-\subsection{Recurring costs}\label{subsec:recurring-costs}
+\subsection{Recurring Costs}\label{subsec:recurring-costs}
 These are the costs that are incurred on a daily basis due to the continuous operation of the system.
 Table~\ref{tab:system-cost-breakdown} summarizes the operational cost over a 3-day window and the equivalent daily cost.
 
@@ -10,11 +10,11 @@ Table~\ref{tab:system-cost-breakdown} summarizes the operational cost over a 3-d
     \renewcommand{\arraystretch}{1.1}
     \begin{tabularx}{\textwidth}{p{2.9cm} p{3.8cm} p{3.3cm} >{\raggedleft\arraybackslash}p{2.2cm} >{\raggedleft\arraybackslash}p{2.1cm}}
         \toprule
-        \textbf{Component} & \textbf{Sub category} & \textbf{AWS service} & \textbf{3-day cost (USD)} & \textbf{Daily cost (USD)} \\
+        \textbf{Component} & \textbf{Sub Category} & \textbf{AWS Service} & \textbf{3-Day Cost (USD)} & \textbf{Daily Cost (USD)} \\
         \midrule
         Distributed web crawler & Crawler instances & ECS (Fargate Spot) & \$5.21 & \$1.74 \\
          & IPv4 address use & VPC & \$2.37 & \$0.79 \\
-         & Cross regional data transfer & VPC & \$2.27 & \$0.76 \\
+         & Cross-regional data transfer & VPC & \$2.27 & \$0.76 \\
          & Data ingress & S3 & \$0.52 & \$0.17 \\
          & Queue manager & SQS & \$0.09 & \$0.03 \\
         \midrule
@@ -70,9 +70,9 @@ Here, we can see that nearly 60\% of the total cost is attributed to the distrib
 The database also incurs a high proportion of the total cost, which is expected given that it is a component that is shared across all modules of the system.
 A few modules of the system are not included in this cost analysis, as they are either part of the development process, are one-time costs (e.g., model training), or their costs are negligible (e.g., the web application).
 \begin{itemize}
-    \item The data labeller module is not included as it is entirely hosted on AWS Amplify, which is expensed based on usage and is not a significant cost contributor.
-    \item The product matching module is not included as it is a one-time cost for model training, and the inference in a one-time operation which was conducted on a local machine.
-    \item The proof-of-concept web application is not included as it is entirely hosted on AWS Amplify, and AWS Lambda, which are expensed based on usage and are not significant cost contributors.
+    \item The data labeller module is not included as it is entirely hosted on AWS Amplify, which is usage-based and is not a significant cost contributor.
+    \item The product matching module is not included because model training is a one-time cost, and inference was conducted as a one-time operation on a local machine.
+    \item The proof-of-concept web application is not included as it is hosted on AWS Amplify and AWS Lambda, which are usage-based and are not significant cost contributors.
 \end{itemize}
 
 Figure~\ref{fig:cost-breakdown-charts} visualizes the daily cost split by component and by AWS service.
@@ -92,7 +92,7 @@ Figure~\ref{fig:cost-breakdown-charts} visualizes the daily cost split by compon
     \label{fig:cost-breakdown-charts}
 \end{figure}
 
-\subsection{One-time costs}\label{subsec:one-time-costs}
+\subsection{One-Time Costs}\label{subsec:one-time-costs}
 These are the costs that are incurred during the development phase of the system, and are not recurring costs.
 These are generally the costs associated with model training and hyperparameter tuning.
 These are generally highly variable, and depend on the size of the dataset, the complexity of the model, and the number of hyperparameter tuning iterations.
@@ -103,7 +103,7 @@ All three models were trained/fine-tuned on AWS SageMaker using Hyperparameter t
     \small
     \begin{tabularx}{0.7\textwidth}{X >{\raggedleft\arraybackslash}p{3.2cm}}
         \toprule
-        \textbf{Model} & \textbf{Training cost (USD)} \\
+        \textbf{Model} & \textbf{Training Cost (USD)} \\
         \midrule
         Page classification model & \$10.05 \\
         Information extraction model & \$5.55 \\

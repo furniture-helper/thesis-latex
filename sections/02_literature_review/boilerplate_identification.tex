@@ -1,4 +1,4 @@
-\section{Boilerplate detection and removal}\label{sec:boilerplate_removal}
+\section{Boilerplate Detection and Removal}\label{sec:boilerplate_removal}
 
 A web page is a document that contains both content and presentation information.
 The content of a web page is the information that is relevant to the user, while the presentation information is the information that is used to display the web page.
@@ -21,7 +21,7 @@ There are primarily two approaches to boilerplate detection and removal\cite{pom
     \item \textbf{Page-Level Methods}: These methods analyze each page individually to identify boilerplate elements based on features such as link density, text density, and the structure of the HTML document.
 \end{enumerate}
 
-\subsection{Site-level methods}\label{subsec:site-level-methods}
+\subsection{Site-Level Methods}\label{subsec:site-level-methods}
 
 \subsubsection{Site Style Trees (SST)}\label{subsubsec:site-style-trees}
 Using the DOM from a sample of pages from a website, a site style tree (SST) can be constructed to represent the common structure of that specific website.
@@ -35,20 +35,20 @@ By analyzing the SST, it is possible to identify and remove boilerplate elements
     \label{fig:site_style_trees_example}
 \end{figure}
 
-\subsubsection{Using subtree hashes}\label{subsubsec:subtree-hashes}
+\subsubsection{Using Subtree Hashes}\label{subsubsec:subtree-hashes}
 Similar to site style trees, subtree hashes can be used to identify boilerplate elements across multiple pages of a website.
 By computing a hash for each subtree in the DOM of a page, it is possible to compare these hashes across different pages to identify common subtrees that are likely to be boilerplate.
 Subtrees that have the same hash across multiple pages are likely to be boilerplate, while those that have unique hashes are more likely to be content.
 This method can be computationally efficient and effective in identifying boilerplate elements. \cite{gibson2005volume}
 
-\subsection{Page-level methods}\label{subsec:page-level-methods}
+\subsection{Page-Level Methods}\label{subsec:page-level-methods}
 
 \subsubsection{Body Text Extraction (BTE)}\label{subsubsec:body-text-extraction}
 This is a heuristic-based method based on the observation that the main content of a web page usually contains long streams of uninterrupted text with a low HTML tag density.
 By analyzing the structure of the HTML document and identifying areas with high text density and low tag density, it is possible to extract the main content of the page.
 While this is a simple method, one major drawback is that modern web pages are extremely complex and may not always follow this pattern, leading to inaccurate results. \cite{vogels2018web2text}
 
-\subsubsection{Shallow text features}\label{subsubsec:shallow-text-features}
+\subsubsection{Shallow Text Features}\label{subsubsec:shallow-text-features}
 This method first chunks the web page into smaller sections based on the structure of the HTML document.
 It then computes various features for each chunk, such as link density (the ratio of links to text), text density (the ratio of text to HTML tags), and other structural features.
 High link density is generally indicative of boilerplate, while high text density is more indicative of content. \cite{kohlschutter2010boilerplate}
@@ -57,7 +57,7 @@ This also builds on the concept of functional short text vs descriptive long tex
 characterized by short, incomplete sentences  (e.g., home, contact us) is more likely to be boilerplate,
 while descriptive long text, characterized by full sentences and higher complexity is more likely to be content. \cite{kohlschutter2010boilerplate}
 
-\subsubsection{Supervised machine learning techniques}\label{subsubsec:supervised-ml-methods}
+\subsubsection{Supervised Machine Learning Techniques}\label{subsubsec:supervised-ml-methods}
 While BTE and shallow text features can be effective in some cases, they may not always be sufficient to accurately identify boilerplate elements, especially on modern web pages with complex structures.
 Supervised machine learning techniques, such as neural networks and multi-layer perceptrons (MLPs), can be trained on labeled datasets of web pages to learn more complex patterns and features that distinguish boilerplate from content.
 By using a large and diverse training dataset, these models can learn to generalize well to new web pages and can be more effective in accurately identifying boilerplate elements.
@@ -67,7 +67,7 @@ Two examples of supervised machine learning techniques for boilerplate detection
 which uses Convolutional Neural Networks (CNNs) to predict probabilities for chunks of a page, and the transition between blocks,
 and BoilerNet\cite{leonhardt2020boilerplate}, which use bidirectional LSTMs that learn dependency between blocks and their neighbours.
 
-\subsection{Performance improvements}\label{subsec:performance-improvements}
+\subsection{Performance Improvements}\label{subsec:performance-improvements}
 Removing boilerplate content from web pages have shown to significant performance gains in downstream tasks such as
 web page classification and clustering, as it allows these tasks to focus on the relevant content of the page rather than being distracted by irrelevant boilerplate elements.
 In addition, it also reduces the amount of data that needs to be processed, which can lead to faster processing times and improved efficiency in these tasks.
@@ -102,4 +102,3 @@ Table~\ref{tab:boilerplate_summary} summarises the key approaches reviewed in th
     \caption{Summary of boilerplate detection and removal approaches}
     \label{tab:boilerplate_summary}
 \end{table}
-

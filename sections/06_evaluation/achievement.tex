@@ -1,19 +1,19 @@
-\section{Achievement of objectives and requirements}\label{sec:achievement_of_objectives_and_requirements}
+\section{Achievement of Objectives and Requirements}\label{sec:achievement_of_objectives_and_requirements}
 
 This section of the report presents the evaluation of the extent to which the proposed system meets the initial objectives and requirements as defined in Chapter~\ref{ch:problem_specification_and_requirements}.
 
-\subsection{Achievement of objectives}\label{subsec:achievement_of_objectives}
+\subsection{Achievement of Objectives}\label{subsec:achievement_of_objectives}
 
-\subsubsection{Web crawler}
+\subsubsection{Web Crawler}
 The primary objective of the web crawler was to be able to efficiently crawl multiple e-commerce platforms and collect page data.
 The designed distributed web crawler was able to crawl over 116,000 pages crawled across 36 different e-commerce websites.
 At its current implementation of one instance, each crawling 100 pages, being spun up every 3 minutes, it was able to crawl over 29,000 pages in a single day.
 
-\subsubsection{Boilerplate removal and HTML minimization}
+\subsubsection{Boilerplate Removal and HTML Minimization}
 This was a secondary objective of the system, which was to be able to remove boilerplate content and minimize the HTML content of the crawled pages.
 The HTML minimizer algorithm was able to reduce the size of the HTML content by \texttt{98.16\%}, and was able to minimize batches of 20,000 documents in an average of \texttt{768.21 seconds}.
 
-\subsubsection{Page classification}
+\subsubsection{Page Classification}
 The primary objective was to evaluate different page classification techniques and select the best performing model for deployment.
 The techniques tested were:
 \begin{itemize}
@@ -25,7 +25,7 @@ The techniques tested were:
 While the best performing model was the MarkupLM model, the selected model for deployment was the BERT embeddings with a neural network classifier, due to its balance between performance, speed, and cost.
 The final trained model for this task achieved an F1-score of \texttt{0.971}, and could classify batches of 20,000 documents in an average of \texttt{40.89 minutes}.
 
-\subsubsection{Information extraction}
+\subsubsection{Information Extraction}
 The primary objective was to evaluate different information extraction techniques and select the best performing model for deployment.
 The techniques tested were:
 \begin{itemize}
@@ -39,18 +39,18 @@ The final trained model for this task achieved an overall F1-score of \texttt{0.
 
 The results from this module also led into the price history tracking framework, which was able to keep records of price changes for a given product at a specific e-commerce platform.
 
-\subsubsection{Product matching}
+\subsubsection{Product Matching}
 The primary objective was to evaluate different product matching techniques and select the best performing model for deployment.
 10 different techniques were tested, including those using string similarity algorithms such as trigram Jaccard similarity, edit distance, algorithms such as the BM-25 algorithm, and deep learning approaches using embeddings models such as BERT, RexBERT, and MarkupLM.
 
 The best performing technique was to use trigram Jaccard similarity to generate candidate matches, and then use fine-tuned RexBERT embedding model to generate vectors for the minimized page content, and then use cosine similarity to find the best matches.
 This technique was able to achieve an F1-score of \texttt{0.88}.
 
-\subsubsection{Proof-of-concept system}
+\subsubsection{Proof-of-Concept System}
 This was a secondary objective of the system, which was to implement a web-based application that allows users to search for products and view their historical prices across different platforms, as well as compare prices and identify the best deals available.
 The implemented system was able to retrieve price history for a given product at a specific retailer with a p95 response time of \texttt{224ms}, and was able to retrieve cross-site product matches for a given product with a p95 response time of \texttt{2,907ms}.
 
-\subsection{Achievement of requirements}\label{subsec:achievement_of_requirements}
+\subsection{Achievement of Requirements}\label{subsec:achievement_of_requirements}
 
 Table~\ref{tab:requirements-achievement} summarizes the extent to which each functional and non-functional requirement was achieved.
 

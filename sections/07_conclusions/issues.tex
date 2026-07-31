@@ -1,8 +1,8 @@
-\section{Professional, social, legal, and ethical issues}\label{sec:issues}
+\section{Professional, Social, Legal, and Ethical Issues}\label{sec:issues}
 
 While this project does provide benefits to consumers in the form of price transparency and the ability to make informed purchasing decisions, there are several professional, social, legal, and ethical issues that need to be considered.
 
-\subsection{Excessive load on e-commerce platforms}\label{subsec:excessive-load-on-e-commerce-platforms}
+\subsection{Excessive Load on E-Commerce Platforms}\label{subsec:excessive-load-on-e-commerce-platforms}
 During the crawling process, each product page of an e-commerce problem is crawled at a rate of approximately once every 3 days.
 Depending on the size of the website, this can result in a significant number of requests being made to the e-commerce platform, which can put an excessive load on their servers and potentially impact their performance.
 For the 36 websites considered for this project, this included a maximum of \texttt{8,192} requests per day for the largest website (bigdeals.lk), and a minimum of \texttt{30} requests per day for the smallest website (raesl.lk), with an average of \texttt{715} requests per day across all websites.
@@ -16,7 +16,7 @@ This project implements several measures to minimize the impact of the crawling 
     \item The crawler minimizes the downloading of external resources, such as images, scripts, and stylesheets, which can significantly increase the load on the target server.
 \end{itemize}
 
-\subsection{Data privacy and security}\label{subsec:data-privacy-and-security}
+\subsection{Data Privacy and Security}\label{subsec:data-privacy-and-security}
 The data collected by this project is limited to publicly available information on e-commerce websites, such as product names, prices, images, and stock status.
 However, it is possible for the crawler to inadvertently collect sensitive information or personally identifiable information (PII) if it is present on the target websites.
 Therefore, it is important that data processing and storage is conducted in a secure manner, and that any sensitive information is handled in accordance with relevant data privacy laws and regulations.
@@ -28,14 +28,14 @@ This project implements several measures to ensure the privacy and security of t
     No data is transferred over the internet or otherwise to external systems.
 \end{itemize}
 
-\subsection{Incorrect or misleading information}\label{subsec:incorrect-or-misleading-information}
+\subsection{Incorrect or Misleading Information}\label{subsec:incorrect-or-misleading-information}
 The information extracted from the e-commerce websites may not always be accurate or up-to-date, and there is a risk that the system may provide incorrect or misleading information to users.
 Since all three models used for this framework (page classification, information extraction, and product matching) are machine learning models, there is a possibility of errors in the predictions made by these models.
 Moreover, there can be a delay between the time when the information is extracted from the e-commerce websites and the time when it is presented to users, which can result in outdated information being displayed.
 The current system does not provide any methods to mitigate this risk, this can be considered to be a limitation of the system, and users should be made aware of this risk when using the system.
 However, this can be a potential area for future work, where methods can be implemented to ensure that the information presented to users is accurate and up-to-date, or provide mechanisms for users to report and correct any incorrect or misleading information.'
 
-\subsection{Harm to retailers}\label{subsec:harm-to-retailers}
+\subsection{Harm to Retailers}\label{subsec:harm-to-retailers}
 The system may have an impact on the business of e-commerce retailers, as it provides users with the ability to compare prices across different platforms and make informed purchasing decisions.
 This can potentially lead to a decrease in sales for retailers that have higher prices, and may also lead to increased competition among retailers, which can result in lower profit margins and reduced revenue.
 This can especially harm small businesses that may not have the resources to compete with larger retailers, and may also lead to a decrease in the quality of products and services offered by retailers, as they may be forced to cut costs in order to remain competitive.

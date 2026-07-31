@@ -1,9 +1,9 @@
-\section{Future work}\label{sec:future_work}
+\section{Future Work}\label{sec:future_work}
 
 This section outlines potential future work and improvements that can be made to the proposed system.
 While the current implementation has demonstrated its effectiveness in crawling, processing, and analyzing e-commerce data, there are several areas where further enhancements can be made.
 
-\subsection{Improvements to product matching response times}\label{subsec:improvements-to-product-matching-response-times}
+\subsection{Improvements to Product Matching Response Times}\label{subsec:improvements-to-product-matching-response-times}
 The current implementation of the product matching module has a p95 response time of \texttt{2,907ms}, which is significantly higher than the objective of \texttt{2,000ms}.
 The main reason for this is that the product matching module uses a two-step approach, where the first step is to generate candidate matches using trigram Jaccard similarity, and the second step is to use a fine-tuned RexBERT embedding model to generate vectors for the minimized page content, and then use cosine similarity to find the best matches.
 Both operations are performed within the database instance on Amazon RDS using SQL queries.
@@ -11,7 +11,7 @@ Since especially the second step is computationally expensive, this can lead to 
 For this project a \texttt{db.t3.small} instance was used, which is a general-purpose instance with 2 vCPUs and 2 GiB of memory.
 The performance of the product matching module can be improved by using a more powerful RDS instance, or by moving the product matching module to a separate service that can be scaled independently of the database, and can use more powerful compute resources to perform the vector comparisons.
 
-\subsection{Multi-layer crawling architecture}\label{subsec:multi-layer-crawling-architecture}
+\subsection{Multi-Layer Crawling Architecture}\label{subsec:multi-layer-crawling-architecture}
 The current crawler architecture relies on a single queue to manage the crawling tasks.
 While AWS SQS' queues do allow for redrive policies to handle failed messages, the retries are currently handled by the same crawler that failed to process it in the first place.
 Upon three retries, the message is sent to a dead-letter queue, and the failed page is not crawled again until the next crawl cycle.
@@ -19,17 +19,17 @@ This can be improved by implementing a multi-layer crawling architecture, where 
 They could even be crawled by a crawler instance running on a separate AWS region, which would allow for a different network path to be used, and could potentially avoid the issues that caused the failure in the first place.
 This would allow for more efficient handling of failed pages, and would increase the overall success rate of the crawling process.
 
-\subsection{Dynamic crawling frequency}\label{subsec:dynamic-crawling-frequency}
+\subsection{Dynamic Crawling Frequency}\label{subsec:dynamic-crawling-frequency}
 The current implementation of the system spawns a new crawler instance every 3 minutes, which crawls 100 pages.
 While this is a reasonable crawling frequency for the current set of pages, if the dataset were to grow (or shrink) significantly, this crawling frequency may not be optimal.
-This can be improved by implementing a dynamic crawling frequency, where the crawling frequency is adjusted based number of pages in the queue, and the number of pages to be crawled by each instance is adjusted based on the average time taken to crawl a page.
+This can be improved by implementing a dynamic crawling frequency, where the crawling frequency is adjusted based on the number of pages in the queue, and the number of pages crawled by each instance is adjusted based on the average time taken to crawl a page.
 
-\subsection{Memory optimization on classification and extraction inference}\label{subsec:memory-optimization-on-classification-and-extraction-inference}
-The current implementation of the jobs used to generate datasets and perform inference for the page classification and information extraction models are run on AWS Sagemaker instances which require a large amount of memory.
+\subsection{Memory Optimization on Classification and Extraction Inference}\label{subsec:memory-optimization-on-classification-and-extraction-inference}
+The current implementation of the jobs used to generate datasets and perform inference for the page classification and information extraction models runs on AWS SageMaker instances, which require a large amount of memory.
 If the dataset were to grow significantly, this could lead to memory issues, and the jobs may fail to complete successfully.
 This can be improved by implementing memory optimization techniques, such as using smaller batch sizes, or using model quantization techniques to reduce the memory footprint of the models, which would allow for more efficient use of memory and reduce the risk of memory-related issues during inference.
 
-\subsection{Cost optimization}\label{subsec:cost-optimization}
+\subsection{Cost Optimization}\label{subsec:cost-optimization}
 While the current implementation of the system is cost-effective, there are several areas where further cost optimization can be achieved.
 \begin{itemize}
     \item Using AWS reserved instances and saving plans for the crawler instances and the RDS database, which can provide significant cost savings compared to on-demand instances.
@@ -42,7 +42,7 @@ While the current implementation of the system is cost-effective, there are seve
     It may be effective to reduce the frequency of information extraction for products that have had static pricing for a long period of time, and only extract information for products that have had price changes recently.
 \end{itemize}
 
-\subsection{Study on pricing practices by online retailers}\label{subsec:study-on-pricing-practices-by-online-retailers}
+\subsection{Study on Pricing Practices by Online Retailers}\label{subsec:study-on-pricing-practices-by-online-retailers}
 The dataset generated by this project can be repurposed to conduct a study on pricing practices by online retailers.
 This can be done by analyzing the price history of products across different e-commerce platforms, and identifying patterns and trends in pricing practices, such as price discrimination, dynamic pricing, and fake discounts.
 This can also be used to identify the impact of external factors, such as holidays, sales events, and market trends, on pricing practices by online retailers, which will be useful in predicting future pricing trends and identifying potential opportunities for consumers to make informed purchasing decisions.

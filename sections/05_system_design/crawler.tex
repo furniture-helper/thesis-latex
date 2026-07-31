@@ -1,4 +1,4 @@
-\section{Distributed crawler}\label{sec:distributed_crawler}
+\section{Distributed Crawler}\label{sec:distributed_crawler}
 
 The distributed crawler forms the starting point of the system design.
 It is responsible for fetching and processing web pages from the set of e-commerce websites and storing them in order to be processed in the later stages.
@@ -13,7 +13,7 @@ The crawler is implemented with the use of three subcomponents.
     \item \textbf{Crawler workers:} These are Amazon ECS tasks which loads URLs from the crawler queue, fetches the corresponding web pages, and saves their content.
 \end{enumerate}
 
-\subsection{Crawler queue}\label{subsec:crawler-queue}
+\subsection{Crawler Queue}\label{subsec:crawler-queue}
 The crawler queue is a fairly simple component.
 It is implemented using Amazon SQS, which provides a reliable, scalable, and fully managed message queuing service.
 The queue holds the URLs to be crawled, allowing the crawler workers to fetch and process them asynchronously.
@@ -29,7 +29,7 @@ Once a URL is successfully processed, it is deleted from the queue, ensuring tha
 Moreover, the main queue is configured with a maximum message retention period of 1 day, which means that if a URL is not processed within 1 day, it will be automatically deleted from the queue.
 This prevents the queue from growing indefinitely and ensures that only relevant URLs are kept for processing.
 
-\subsection{Queue manager}\label{subsec:queue-manager}
+\subsection{Queue Manager}\label{subsec:queue-manager}
 The queue manager is a lambda function that runs every 15 minutes and is responsible for populating the crawler queue with new URLs to be crawled.
 It first checks whether the crawler queue is empty, and if it is not, it does nothing and exits.
 If the queue is empty, it checks the database for any URLs which match at least one of the following criteria:
@@ -49,7 +49,7 @@ The figure~\ref{fig:crawler_queue_manager_logic} shows the logic of the queue ma
 
 The behaviour of the crawler ensures that each product page is crawled at least once every 3 days, while all other pages are crawled at roughly once every 7 days.
 
-\subsection{Crawler workers}\label{subsec:crawler-workers}
+\subsection{Crawler Workers}\label{subsec:crawler-workers}
 The crawler workers are Amazon ECS tasks that are responsible for fetching and processing the web pages from the crawler queue.
 Each worker loads a URL from the queue, fetches the corresponding web page, and saves its content to the database.
 The workers are designed to operate in parallel, allowing for efficient processing of large volumes of data.
@@ -94,7 +94,7 @@ As a result, each worker instance only crawls a small number of URLs, but there 
 This ensures that the crawling process can continue uninterrupted, even in the face of spot instance interruptions.
 If it is required to increase the rate of crawling, the number of worker instances can be increased, allowing for more URLs to be processed in parallel.
 
-\subsection{Crawler system architecture}\label{subsec:crawler-architecture}
+\subsection{Crawler System Architecture}\label{subsec:crawler-architecture}
 The figure~\ref{fig:crawler_system_architecture} presents the overall architecture of the distributed crawler system.
 It shows the interactions between the different components, including the crawler queue, queue manager, and crawler workers, as well as the database and S3 bucket used for storing the crawled data.
 

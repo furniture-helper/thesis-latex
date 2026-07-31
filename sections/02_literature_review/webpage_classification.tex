@@ -1,4 +1,4 @@
-\section{Web page classification}\label{sec:webpage_classification}
+\section{Web Page Classification}\label{sec:webpage_classification}
 
 Web page classification is the process of categorizing web pages in one or more predefined classes based on their content, structure, and visual properties.
 This can be considered to be a pre-processing task of information extraction/retrieval, as the method and types of information extraction/retrieval can be different for different types of web pages.
@@ -11,7 +11,7 @@ Web page classification, while fundamentally can be considered to be a text docu
     \label{fig:web_page_classification_process}
 \end{figure}
 
-\subsection{Web page classification techniques}\label{subsec:web-page-classification-techniques}
+\subsection{Web Page Classification Techniques}\label{subsec:web-page-classification-techniques}
 Web page classification techniques can be broadly categorized into three categories:
 \begin{enumerate}
     \item Keyword-based techniques: These techniques rely on the presence of specific keywords or phrases in the web page and its frequency to classify it into a particular category.
@@ -19,14 +19,14 @@ Web page classification techniques can be broadly categorized into three categor
     \item LLM based techniques: These techniques utilize large language models (LLMs) to classify web pages.
 \end{enumerate}
 
-\subsubsection{Keyword-based techniques}\label{subsubsec:keyword-based-techniques}
+\subsubsection{Keyword-Based Techniques}\label{subsubsec:keyword-based-techniques}
 Keyword-based techniques are fairly simple, rule based approaches which do not require a labeled training or training.
 Documents are assigned to categories based on the highest match count of specific keywords, or on keyword density (the ratio of the number of occurrences of a keyword to the total number of words in the document).
 While such techniques are simple and easy to implement, they can be inaccurate and perform poorly on more complex pages\cite{Procycons_2025}.
 More advanced techniques such as Term Frequency - Inverse Document Frequency (TF-IDF) can be used to improve the performance of keyword-based techniques by giving more weight to keywords that are more relevant to a particular category and less weight to common keywords that appear in many categories.
 Combining TF-IDF with traditional machine learning classifiers have shows to have strong performance in web page classification tasks\cite{de2019towards}.
 
-\subsubsection{Supervised learning techniques}\label{subsubsec:supervised-learning-techniques}
+\subsubsection{Supervised Learning Techniques}\label{subsubsec:supervised-learning-techniques}
 Supervised learning techniques for web page classification involve training a machine learning model on a labeled dataset of web pages, where each web page is associated with a specific category or class.
 The model learns to classify web pages based on the features extracted from the content and structure of the web pages.
 Classical algorithms such as Naive Bayes, Support Vector Machines (SVM), k-Nearest Neighbour (kNN) and Decision Trees have been used for web page classification, while SVMs have been shown to be particularly effective for this task\cite{petprasit2015commerce}.
@@ -35,7 +35,7 @@ More recently, deep learning techniques utilizing Convolutional Neural Networks 
 Transformer-based models such as BERT (Bidirectional Encoder Representations from Transformers) have also been applied to web page classification tasks, showing strong performance due to their ability to capture contextual information in the text.
 However, more simple models usually offer a better efficiency-performance trade-off, and are often preferred in settings where computational resources may be limited\cite{mahara2025cybersecurity}.
 
-\subsubsection{LLM based techniques}\label{subsubsec:llm-based-techniques}
+\subsubsection{LLM Based Techniques}\label{subsubsec:llm-based-techniques}
 Large language models (LLMs) have shown to be effective in various natural language processing tasks, including web page classification.
 While this is a very complex technique, the existence of foundational models by OpenAI, Google, Anthropic and others, has made it more accessible and easier to implement via an API call.
 A significant benefit of using LLMs, is that it can be used for zero-shot classification, which means it can be used when there are no training example available for the specific classification task.
@@ -43,7 +43,7 @@ Another advantage is that it can handle very long documents (contexts) with high
 A major drawback though, is the high cost of this method as API calls to LLMs can be expensive, especially for long, feature rich documents such as web pages.
 Moreover, the per-page inference time can also be significantly higher compared to traditional machine learning techniques, which can be a concern in settings where real-time classification is required or when processing large volumes of web pages\cite{Procycons_2025}
 
-\subsection{Techniques without negative examples}\label{subsec:techniques_without_negative_examples}
+\subsection{Techniques Without Negative Examples}\label{subsec:techniques_without_negative_examples}
 As web page labelling is generally a manual and time-consuming process,
 in some cases, it may be difficult to have a complete labeled dataset consisting of both positive and negative classes (e.g. product pages vs. non-product pages).
 It can be easier to just have a set of positive examples (e.g.\ product pages) without having a complete set of negative examples (e.g. non-product pages).
@@ -56,14 +56,14 @@ This approach can be effective in situations where it is difficult to obtain a c
     \label{fig:with_non_negative_pebl}
 \end{figure}
 
-\subsection{Effect of noise removal}\label{subsec:effect_of_noise_removal}
+\subsection{Effect of Noise Removal}\label{subsec:effect_of_noise_removal}
 In the context of web page classification, noise refers to the irrelevant information on a web page that can interfere with the accuracy of the classification process.
 This can include boilerplate content, advertisements, navigation menus, and other non-content elements.
 The presence of noise can lead to misclassification of web pages, as the classifier may be influenced by the irrelevant information rather than the relevant content.
 By removing noise from web pages, the classifier can focus on the relevant content, which can lead to more accurate classification results.
 In~\cite{shen2004web}, it was indicated that performance of web page classification improved by 10\% to 15\% after noise removal.
 
-\subsection{MarkupLM}\label{subsubsec:markuplm}
+\subsection{Markuplm}\label{subsubsec:markuplm}
 MarkupLM\cite{li2022markuplm} is a pre-trained transformer based model designed for markup-language based documents such as HTML and XML.
 Unlike standard techniques, which treat web pages as a block of text, MarkupLM takes into account the structure of the web page by incorporating the HTML tags and their relationships into the model.
 It introduces XPath embeddings, which capture for each node, it's position in the DOM tree, its relationship with other nodes, and the HTML tag information.
@@ -76,7 +76,7 @@ This has resulted in significant performance improvements compared to text-only 
     \label{fig:dom_tree_and_xpath}
 \end{figure}
 
-\subsection{E-commerce web page classification}\label{subsec:ecommerce_web_page_classification}
+\subsection{E-Commerce Web Page Classification}\label{subsec:ecommerce_web_page_classification}
 E-commerce web page classification is a specific application of web page classification that focuses on categorizing web pages related to e-commerce, such as product pages, product list pages, blog pages etc.
 This can be particularly challenging as e-commerce sites contain complex and repetitive structures, which can also vary significantly across different sites.
 In addition, the presence of noise such as advertisements, navigation menus, and other non-content elements can also hinder the classifier's performance.

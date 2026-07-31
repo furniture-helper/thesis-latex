@@ -1,4 +1,4 @@
-\section{Web information extraction}\label{sec:web_information_extraction}
+\section{Web Information Extraction}\label{sec:web_information_extraction}
 
 Web information extraction is the process of extracting structured data from unstructured web content.
 While traditionally, this was done using rule-based approaches, where developers would write specific rules to identify HTML elements via their XPath or CSS selectors, modern approaches have shifted towards machine learning and deep learning techniques.
@@ -7,7 +7,7 @@ For instance, models can be trained to recognize patterns in the DOM tree, allow
 Another requirement is for zero-shot extraction, where the model can extract information from webpages it has never seen before, without needing to be retrained for each new website.
 In the context of e-commerce, web information extraction involves tasks such as extracting product details (e.g., name, price, description) from product pages, which can be challenging due to the diversity of webpage designs and the presence of boilerplate content.
 
-\subsection{Embedded semantic metadata}\label{subsec:embedded_semantic_metadata}
+\subsection{Embedded Semantic Metadata}\label{subsec:embedded_semantic_metadata}
 More modern websites, especially those build on top of popular frameworks and content management systems, often include embedded semantic metadata in their HTML code to provide additional context about the content of the page.
 This metadata is used to provide search engine crawlers and other applications with structured information about the content of the page, which can be used to improve search results and enable rich snippets in search engine results pages (SERPs).
 
@@ -65,7 +65,7 @@ An analysis of the 100 most popular e-commerce websites in the US and UK in 2023
 
 Therefore, while embedded semantic metadata can be a valuable source of structured data for web information extraction, it is not universally present or consistently implemented across all websites, which can limit its effectiveness as a sole method for extracting information from the web\@.
 
-\subsection{Vision-based approaches}\label{subsec:vision_based_approaches}
+\subsection{Vision-Based Approaches}\label{subsec:vision_based_approaches}
 While the Document Object Model (DOM) provides a structured representation of a webpage, it can be complex and noisy, and usually fails to reflect the actual semantic grouping of content as perceived by human users.
 Vision-based approaches to web information extraction address this issue by treating the webpage as an image and leveraging computer vision techniques to identify and extract relevant information.
 The \textbf{Vision-based Page Segmentation (VIPS) algorithm}\cite{cai2003vips} was developed to segment a webpage into visually coherent blocks, which can then be analyzed to extract structured data.
@@ -79,7 +79,7 @@ Each node in the tree represents a visually coherent block of content, and the a
     \label{fig:vips}
 \end{figure}
 
-\subsection{DOM tree node classification}\label{subsec:dom_tree_node_classification}
+\subsection{DOM Tree Node Classification}\label{subsec:dom_tree_node_classification}
 Another approach to web information extraction is to treat the problem as a classification task, where each node in the DOM tree is classified as either relevant or irrelevant for the information extraction task at hand.
 This approach can be implemented using machine learning or deep learning models, which can learn to identify relevant nodes based on features such as the node's tag name, attributes, text content, and its position in the DOM tree.
 Graph Neural Networks (GNNs) have been used to model the relationships between nodes in the DOM tree, allowing for more effective classification of relevant nodes.
@@ -103,7 +103,7 @@ It uses a GNN to model the relationships between nodes in the DOM tree, allowing
     \label{fig:potta2024attrisage}
 \end{figure}
 
-\subsection{Markup and layout-based approaches}\label{subsec:markup_and_layout_based_approaches}
+\subsection{Markup and Layout-Based Approaches}\label{subsec:markup_and_layout_based_approaches}
 Recent transformer architectures have been developed that integrate the structural hierarchy of HTML directly into language representations, allowing for more effective web information extraction by leveraging both the textual content and the structural layout of the webpage.
 Unlike traditional models which only encode the textual content of a node, these models also encode the position of the node in the DOM tree, which can provide valuable context for understanding the relationships between different elements on the page.
 
@@ -125,7 +125,7 @@ There are three types of tokens used in WebFormer in the input layer.
 
 WebFormer uses four specialized attention patterns (HTML-to-HTML, HTML-to-Text, Text-to-HTML, and Text-to-Text) to allow the model to effectively leverage both the structural information provided by the HTML tokens and the content information provided by the text tokens, enabling it to perform accurate web information extraction even when the webpage layout varies significantly across different websites.
 
-\subsubsection{Performance comparison}\label{subsubsec:performance_comparison}
+\subsubsection{Performance Comparison}\label{subsubsec:performance_comparison}
 \begin{table}[h]
     \centering
     \small
@@ -147,7 +147,7 @@ WebFormer uses four specialized attention patterns (HTML-to-HTML, HTML-to-Text, 
     \label{tab:markuplm-webformer-performance}
 \end{table}
 
-\subsection{Multimodal approaches}\label{subsec:multimodal_approaches}
+\subsection{Multimodal Approaches}\label{subsec:multimodal_approaches}
 Multimodal approaches to web information extraction leverage multiple sources of information, such as the textual content and the visual layout of the webpage, to improve the accuracy and robustness of information extraction.
 
 LayoutLMv3\cite{huang2022layoutlmv3} is one such model that encodes text (via OCR) and layout coordinates and image patches.
@@ -155,7 +155,7 @@ It is a pretrained multimodal transformer model that can be fine-tuned for vario
 LayoutLMv3 uses a combination of text, layout, and image information to perform information extraction, allowing it to effectively identify and extract relevant information from the webpage even when the layout varies significantly across different websites.
 While LayoutLMv3 can achieve high accuracy on web information extraction tasks, it is computationally expensive due to the need to render the webpage and perform OCR to extract text, which can limit its scalability for large-scale web information extraction tasks.
 
-\subsection{LLM-based approaches}\label{subsec:llm_based_approaches}
+\subsection{LLM-Based Approaches}\label{subsec:llm_based_approaches}
 Large Language Models (LLMs) excel at zero-shot information extraction tasks, where the model can extract information from webpages it has never seen before without needing to be specifically trained.
 LLMs can be prompted with the HTML content of a webpage and a specific extraction task, and they can generate structured data based on the provided input.
 For example, a prompt might include the HTML content of a product page and a request to extract the product name, price, and description, and the LLM would generate a structured output containing this information.
